@@ -14,8 +14,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 1
-        versionName "1.0"//在bintrayUpload.gradle里android.defaultConfig.versionName作为该library的versionName
+        versionCode 2
+        versionName "1.0.1"//在bintrayUpload.gradle里android.defaultConfig.versionName作为该library的versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
