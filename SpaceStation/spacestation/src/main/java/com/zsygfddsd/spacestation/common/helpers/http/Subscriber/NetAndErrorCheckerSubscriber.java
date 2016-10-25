@@ -3,7 +3,7 @@ package com.zsygfddsd.spacestation.common.helpers.http.Subscriber;
 import android.content.Context;
 import android.support.annotation.CallSuper;
 
-import com.zsygfddsd.spacestation.base.module.network.BaseNetContract;
+import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetContract;
 import com.zsygfddsd.spacestation.common.utils.DeviceUtils;
 import com.zsygfddsd.spacestation.data.bean.ComRespInfo;
 
@@ -15,9 +15,9 @@ import rx.Subscriber;
 public abstract class NetAndErrorCheckerSubscriber<T> extends Subscriber<ComRespInfo<T>> {
 
     private Context context;
-    private BaseNetContract.INetView netView;
+    private Y_BaseNetContract.INetView netView;
 
-    public NetAndErrorCheckerSubscriber(Context context, BaseNetContract.INetView netView) {
+    public NetAndErrorCheckerSubscriber(Context context, Y_BaseNetContract.INetView netView) {
         this.context = context;
         this.netView = netView;
     }

@@ -4,7 +4,7 @@ package com.zsygfddsd.spacestation.base.module.network_recyclerview;
 import android.content.Context;
 
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.ItemEntityList;
-import com.zsygfddsd.spacestation.base.module.network.BaseNetPresenter;
+import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetPresenter;
 import com.zsygfddsd.spacestation.common.helpers.http.ObservableFactory;
 import com.zsygfddsd.spacestation.common.helpers.http.Subscriber.NetAndErrorCheckerSubscriber;
 import com.zsygfddsd.spacestation.common.helpers.http.transformer.EmitBeforeAndAfterTransformer;
@@ -21,20 +21,20 @@ import rx.Observable;
  * DATA:表示ComRespInfo<DATA> 中的DATA的bean
  * D:表示每一个item的bean
  */
-public abstract class BasePagePresenter<DATA, D> extends BaseNetPresenter implements BasePageContract.IBaseRecyclerViewPresenter {
+public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter implements Y_BasePageContract.IBaseRecyclerViewPresenter {
 
     protected Context context;
-    private BasePageContract.IBaseRecyclerView mView;
+    private Y_BasePageContract.IBaseRecyclerView mView;
 
     protected int page = 1;
-    protected int pageSize = PageConfig.PageSize;
+    protected int pageSize = Y_PageConfig.PageSize;
     protected volatile boolean isClear = false;//是否清空列表所有数据
     protected volatile List<D> items = new ArrayList<>();// list中当前最新页的数据
     protected volatile List<D> allItems = new ArrayList<>();// list中当前所有的数据
 
     private DefaultLoadingDialogShowConfig defaultLoadingShowConfig = new DefaultLoadingDialogShowConfig(false, true, true);
 
-    public BasePagePresenter(Context context, BasePageContract.IBaseRecyclerView mView) {
+    public Y_BasePagePresenter(Context context, Y_BasePageContract.IBaseRecyclerView mView) {
         super(mView);
         this.context = context;
         this.mView = mView;

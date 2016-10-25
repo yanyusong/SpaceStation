@@ -6,16 +6,16 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-import com.trello.rxlifecycle.components.support.RxFragment;
+import com.zsygfddsd.spacestation.base.fragment.F_RxFragment;
 
 
 /**
  * Created by mac on 16/3/1.
  */
-public class BaseFragment<T extends BaseContract.IBasePresenter> extends RxFragment implements BaseContract.IBaseView<T> {
+public class Y_BaseFragment<T extends Y_BaseContract.IBasePresenter> extends F_RxFragment implements Y_BaseContract.IBaseView<T> {
 
     public Context ct;
-    private BaseContract.IBasePresenter mPresenter;
+    private Y_BaseContract.IBasePresenter mPresenter;
     private Toast toast;
 
     @Override
@@ -41,7 +41,7 @@ public class BaseFragment<T extends BaseContract.IBasePresenter> extends RxFragm
     }
 
     @Override
-    public RxFragment getRxView() {
+    public F_RxFragment getRxView() {
         return this;
     }
 

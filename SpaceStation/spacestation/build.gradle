@@ -15,7 +15,8 @@ android {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode 2
-        versionName "1.0.1"//在bintrayUpload.gradle里android.defaultConfig.versionName作为该library的versionName
+        versionName "1.0.2"
+//在bintrayUpload.gradle里android.defaultConfig.versionName作为该library的versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -48,6 +49,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
+    //fragmentation
+    compile rootProject.ext.dependencies["fragmentation"]
+
     compile rootProject.ext.dependencies["appcompat-v7"]
     //Rx
     compile rootProject.ext.dependencies["retrofit2"]
@@ -55,6 +59,7 @@ dependencies {
     compile rootProject.ext.dependencies["rxandroid"]
     compile rootProject.ext.dependencies["retrofit2-adapter-rxjava"]
     compile rootProject.ext.dependencies["rxlifecycle"]
+    compile rootProject.ext.dependencies["rxlifecycle-android"]
     compile rootProject.ext.dependencies["rxlifecycle-components"]
     compile rootProject.ext.dependencies["okhttp3-logging-interceptor"]
     //recyclerview

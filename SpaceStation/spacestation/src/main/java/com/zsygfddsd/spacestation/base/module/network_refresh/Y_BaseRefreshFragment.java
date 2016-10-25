@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.zsygfddsd.spacestation.R;
-import com.zsygfddsd.spacestation.base.module.network.BaseNetFragment;
+import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetFragment;
 
 
 /**
@@ -18,11 +18,11 @@ import com.zsygfddsd.spacestation.base.module.network.BaseNetFragment;
  * T: 是IBaseRecyclerViewPresenter
  * D: 是item的bean
  */
-public abstract class BaseRefreshFragment<T extends BaseRefreshContract.IBaseRefreshPresenter, DATA> extends BaseNetFragment<T> implements BaseRefreshContract.IBaseRefreshView<T, DATA>, SwipeRefreshLayout.OnRefreshListener {
+public abstract class Y_BaseRefreshFragment<T extends Y_BaseRefreshContract.IBaseRefreshPresenter, DATA> extends Y_BaseNetFragment<T> implements Y_BaseRefreshContract.IBaseRefreshView<T, DATA>, SwipeRefreshLayout.OnRefreshListener {
 
     protected SwipeRefreshLayout refreshView;
 
-    private BaseRefreshContract.IBaseRefreshPresenter mPresenter;
+    private Y_BaseRefreshContract.IBaseRefreshPresenter mPresenter;
     private FrameLayout refreshContentView;
 
     @Override
@@ -33,7 +33,7 @@ public abstract class BaseRefreshFragment<T extends BaseRefreshContract.IBaseRef
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.yys_frag_com_refresh, null);
+        View view = inflater.inflate(R.layout.y_frag_com_refresh, null);
         refreshView = (SwipeRefreshLayout) view.findViewById(R.id.com_refreshLayout);
         refreshView.setOnRefreshListener(this);
         refreshContentView = (FrameLayout) view.findViewById(R.id.frame_refresh_content);

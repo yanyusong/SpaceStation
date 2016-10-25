@@ -2,15 +2,15 @@ package com.zsygfddsd.spacestation.base.module.network_recyclerview;
 
 
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.ItemEntityList;
-import com.zsygfddsd.spacestation.base.module.base.BaseContract;
-import com.zsygfddsd.spacestation.base.module.network.BaseNetContract;
+import com.zsygfddsd.spacestation.base.module.base.Y_BaseContract;
+import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetContract;
 
 /**
  * Created by mac on 16/6/11.
  */
-public class BasePageContract {
+public class Y_BasePageContract {
 
-    public interface IBaseRecyclerView<T extends IBaseRecyclerViewPresenter> extends BaseNetContract.IBaseNetView<T> {
+    public interface IBaseRecyclerView<T extends IBaseRecyclerViewPresenter> extends Y_BaseNetContract.IBaseNetView<T> {
 
         void setHasNextPage(boolean hasNext);
 
@@ -36,7 +36,7 @@ public class BasePageContract {
 
     }
 
-    public interface IBaseRecyclerViewPresenter extends BaseContract.IBasePresenter {
+    public interface IBaseRecyclerViewPresenter extends Y_BaseContract.IBasePresenter {
 
         void onInitData();
 

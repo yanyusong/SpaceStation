@@ -3,7 +3,7 @@ package com.zsygfddsd.spacestation.base.module.network_refresh;
 
 import android.content.Context;
 
-import com.zsygfddsd.spacestation.base.module.network.BaseNetPresenter;
+import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetPresenter;
 import com.zsygfddsd.spacestation.common.helpers.http.ObservableFactory;
 import com.zsygfddsd.spacestation.common.helpers.http.Subscriber.NetAndErrorCheckerSubscriber;
 import com.zsygfddsd.spacestation.data.bean.ComRespInfo;
@@ -16,12 +16,12 @@ import rx.Observable;
  * DATA:表示ComRespInfo<DATA> 中的DATA的bean
  * D:表示每一个item的bean
  */
-public abstract class BaseRefreshPresenter<DATA> extends BaseNetPresenter implements BaseRefreshContract.IBaseRefreshPresenter {
+public abstract class Y_BaseRefreshPresenter<DATA> extends Y_BaseNetPresenter implements Y_BaseRefreshContract.IBaseRefreshPresenter {
 
     private Context context;
-    private BaseRefreshContract.IBaseRefreshView mView;
+    private Y_BaseRefreshContract.IBaseRefreshView mView;
 
-    public BaseRefreshPresenter(Context context, BaseRefreshContract.IBaseRefreshView mView) {
+    public Y_BaseRefreshPresenter(Context context, Y_BaseRefreshContract.IBaseRefreshView mView) {
         super(mView);
         this.context = context;
         this.mView = mView;

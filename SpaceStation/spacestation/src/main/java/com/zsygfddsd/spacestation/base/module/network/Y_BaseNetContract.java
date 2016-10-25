@@ -1,14 +1,14 @@
 package com.zsygfddsd.spacestation.base.module.network;
 
 
-import com.zsygfddsd.spacestation.base.module.base.BaseContract;
+import com.zsygfddsd.spacestation.base.module.base.Y_BaseContract;
 
 /**
  * Created by mac on 16/6/11.
  */
-public class BaseNetContract {
+public class Y_BaseNetContract {
 
-    public interface IBaseNetView<T extends BaseContract.IBasePresenter> extends BaseContract.IBaseView<T>, INetView {
+    public interface IBaseNetView<T extends Y_BaseContract.IBasePresenter> extends Y_BaseContract.IBaseView<T>, INetView {
 
 
     }

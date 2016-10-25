@@ -15,7 +15,7 @@ import com.zsygfddsd.spacestation.R;
  * 使用原生toolbar的兼容
  * Created by Clock on 2016/2/3.
  */
-public abstract class BaseToolBarActivity extends BaseActivity {
+public abstract class Y_BaseToolBarActivity extends Y_BaseActivity {
 
     protected Toolbar mToolbar;
     protected TextView mToolbarTitle;
@@ -26,7 +26,7 @@ public abstract class BaseToolBarActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.yys_activity_main);
+        setContentView(R.layout.y_activity_main);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         mContentView = (FrameLayout) findViewById(R.id.contentView);

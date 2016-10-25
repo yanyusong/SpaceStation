@@ -10,12 +10,11 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-import com.zsygfddsd.spacestation.base.BaseApplication;
-import com.zsygfddsd.spacestation.base.module.network.BaseNetContract;
+import com.zsygfddsd.spacestation.base.Y_BaseApplication;
+import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetContract;
 
 
-public class BaseActivity extends RxAppCompatActivity implements BaseNetContract.INetView {
+public class Y_BaseActivity extends F_RxAppCompatActivity implements Y_BaseNetContract.INetView {
 
     public Context mContext;
     public ProgressDialog pDialog;
@@ -26,7 +25,7 @@ public class BaseActivity extends RxAppCompatActivity implements BaseNetContract
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mContext = this;
-        ((BaseApplication) getApplication()).addActivity(this);
+        ((Y_BaseApplication) getApplication()).addActivity(this);
         /**
          * 设置为竖屏
          */
@@ -36,7 +35,7 @@ public class BaseActivity extends RxAppCompatActivity implements BaseNetContract
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((BaseApplication) getApplication()).removeActivity(this);
+        ((Y_BaseApplication) getApplication()).removeActivity(this);
     }
 
     public void showToast(String content) {
@@ -88,6 +87,10 @@ public class BaseActivity extends RxAppCompatActivity implements BaseNetContract
 
     public void showNoNetWork() {
         showToast("网络连接失败");
+    }
+
+    public F_RxAppCompatActivity getRxView() {
+        return this;
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by mac on 16/5/12.
  */
-public class BaseApplication extends Application {
+public class Y_BaseApplication extends Application {
 
     private List<Activity> allActivity = new LinkedList<>();
     

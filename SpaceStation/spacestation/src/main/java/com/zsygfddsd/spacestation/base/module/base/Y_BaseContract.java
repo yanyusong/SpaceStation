@@ -1,18 +1,18 @@
 package com.zsygfddsd.spacestation.base.module.base;
 
 
-import com.trello.rxlifecycle.components.support.RxFragment;
+import com.zsygfddsd.spacestation.base.fragment.F_RxFragment;
 
 /**
  * Created by mac on 16/6/11.
  */
-public class BaseContract {
+public class Y_BaseContract {
 
-    public interface IBaseView<T extends IBasePresenter>{
+    public interface IBaseView<T extends IBasePresenter> {
 
         void setPresenter(T presenter);
 
-        RxFragment getRxView();
+        F_RxFragment getRxView();
 
         void showToast(String content);
 

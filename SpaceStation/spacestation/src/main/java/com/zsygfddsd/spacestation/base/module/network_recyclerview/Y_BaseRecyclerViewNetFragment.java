@@ -17,7 +17,7 @@ import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.ItemEntityList;
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.MultiRecyclerAdapter;
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.OnBind;
-import com.zsygfddsd.spacestation.base.module.network.BaseNetFragment;
+import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetFragment;
 import com.zsygfddsd.spacestation.common.widgets.DividerGridItemDecoration;
 
 
@@ -26,7 +26,7 @@ import com.zsygfddsd.spacestation.common.widgets.DividerGridItemDecoration;
  * T: 是IBaseRecyclerViewPresenter
  * D: 是item的bean
  */
-public abstract class BaseRecyclerViewNetFragment<T extends BasePageContract.IBaseRecyclerViewPresenter> extends BaseNetFragment<T> implements BasePageContract.IBaseRecyclerView<T>, SwipeRefreshLayout.OnRefreshListener {
+public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract.IBaseRecyclerViewPresenter> extends Y_BaseNetFragment<T> implements Y_BasePageContract.IBaseRecyclerView<T>, SwipeRefreshLayout.OnRefreshListener {
 
     protected static final String ITEM_LAYOUT_ID = "itemLayoutId";
 
@@ -82,7 +82,7 @@ public abstract class BaseRecyclerViewNetFragment<T extends BasePageContract.IBa
     }
 
     private View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.yys_frag_com_recyclerview, null);
+        View view = inflater.inflate(R.layout.y_frag_com_recyclerview, null);
         refreshView = (SwipeRefreshLayout) view.findViewById(R.id.com_refreshLayout);
         recyclerView = (RecyclerView) view.findViewById(R.id.com_recyclerView);
         //        refreshView.setColorSchemeResources();
@@ -268,7 +268,7 @@ public abstract class BaseRecyclerViewNetFragment<T extends BasePageContract.IBa
 
     @Override
     public int getBottomViewLayoutId() {
-        return R.layout.yys_item_recycler_bottom_view;
+        return R.layout.y_item_recycler_bottom_view;
     }
 
     /**
