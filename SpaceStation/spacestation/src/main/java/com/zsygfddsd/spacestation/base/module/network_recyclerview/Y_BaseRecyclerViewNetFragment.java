@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import com.zsygfddsd.spacestation.common.widgets.DividerGridItemDecoration;
  */
 public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract.IBaseRecyclerViewPresenter> extends Y_BaseNetFragment<T> implements Y_BasePageContract.IBaseRecyclerView<T>, SwipeRefreshLayout.OnRefreshListener {
 
+    public static final String TAG = "YRecyFrag";
+
     protected static final String ITEM_LAYOUT_ID = "itemLayoutId";
 
     protected SwipeRefreshLayout refreshView;
@@ -47,6 +50,15 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
 
     private RecyclerView.ItemDecoration itemDecoration = null;
 
+    //是否每次可见时都刷新数据
+    private boolean isAlwaysRefreshPerVisible = false;
+    //lazy懒加载
+    private boolean isLazyLoad = false;//配置是否懒加载数据
+    //先不做布局的懒加载了
+    //    private boolean isFirstCreateView = true;//是否是第一次创建布局
+    private boolean isFirstLoadData = true;//是否是第一次加载数据
+    private boolean isViewCreated = false;//是否View已经创建好准备好接收数据了
+
     protected Bundle data2Bundle(int itemLayoutId) {
         Bundle bundle = new Bundle();
         bundle.putInt(ITEM_LAYOUT_ID, itemLayoutId);
@@ -58,6 +70,12 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         setArguments(bundle);
     }
 
+    /**
+     * 在oncreate里边将除数据源以外的一些全局配置变量重置，初始化，避免由于onDetach后，重走
+     * 生命周期时留下无用的脏数据
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,19 +84,86 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
             this.itemLayoutId = args.getInt(ITEM_LAYOUT_ID) == -1 ? android.R.layout.simple_list_item_1 : args.getInt(ITEM_LAYOUT_ID);
         }
         this.bottomItemLayoutId = getBottomViewLayoutId();
+        this.isAlwaysRefreshPerVisible = getIsAlwaysRefreshPerVisible();
+        this.isLazyLoad = getIsLazyLoad();
+        this.isViewCreated = false;
+        //        this.isFirstCreateView = true;
+    }
+
+    public boolean getIsLazyLoad() {
+        return false;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return initView(inflater, container, savedInstanceState);
+        View view = null;
+        //先不做布局的懒加载了
+        //        if (!getUserVisibleHint() && isFirstCreateView && getPreCreateView() != null) {
+        //            view = getPreCreateView();
+        //        } else {
+        view = initView(inflater, container, savedInstanceState);
+        //        }
+        return view;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //        isFirstCreateView = false;
+        this.isViewCreated = true;
+    }
+
+    /**
+     * 在oncreateView之前执行的
+     *
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.e(TAG, "***********************getUserVisibleHint=============" + getUserVisibleHint());
+        if (isLazyLoad) {
+            Log.e(TAG, "***********************isLazyLoad=============" + true);
+            lazyInitData(null);
+        }
+    }
+
+    public void lazyInitData(Bundle savedInstanceState) {
+        if (!isFirstLoadData || !getUserVisibleHint() || !isViewCreated) {
+            //不是第一次加载数据，即已经加载过数据了，不加载
+            //界面不可见，即页面还没展示给用户的时候，不加载
+            //没有承载数据的view时，即第一次进来或者onDetach以后，setUserVisibleHint时还没有oncreateview时，不加载
+            Log.e(TAG, "***********************lazyInitData=============" + "不加载数据");
+            return;
+        }
+        initData(savedInstanceState);
+        Log.e(TAG, "***********************initData=============" + "初始化加载数据");
+    }
+
+    /**
+     * 在viewpger和多fragment的配合使用中，对于复杂布局可以用此方法替换来加快第一次创建时的速度
+     * 如果为null，则代表不设置预加载布局,
+     * 通过是否返回null来设置是否进行布局View懒加载
+     */
+    //    public View getPreCreateView() {
+    //        return null;
+    //    }
+
+    /**
+     * 是否每次可见都刷新数据
+     *
+     * @return
+     */
+    public boolean getIsAlwaysRefreshPerVisible() {
+        return false;
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData(savedInstanceState);
+        Log.e(TAG, "***********************onActivityCreated=============");
+        lazyInitData(savedInstanceState);
     }
 
     private View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -122,6 +207,7 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
     }
 
     private void initData(Bundle savedInstanceState) {
+        itemEntityList.clear();
         itemEntityList
                 .addOnBind(itemLayoutId, new OnBind() {
                     @Override
@@ -157,7 +243,7 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
 
             final RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
             final int[] lastVisibleItemPos = new int[1];
-
+            recyclerView.clearOnScrollListeners();
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                                                  @Override
                                                  public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
