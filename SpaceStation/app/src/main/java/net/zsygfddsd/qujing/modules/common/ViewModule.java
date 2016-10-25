@@ -1,8 +1,8 @@
 package net.zsygfddsd.qujing.modules.common;
 
-import com.zsygfddsd.spacestation.common.helpers.dagger.ActivityScoped;
 
 import net.zsygfddsd.qujing.R;
+import net.zsygfddsd.qujing.common.utils.ActivityScoped;
 import net.zsygfddsd.qujing.modules.welfarelist.WelfareListContract;
 import net.zsygfddsd.qujing.modules.welfarelist.WelfareListFragment;
 
