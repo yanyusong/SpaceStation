@@ -14,7 +14,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 2
+        versionCode 3
         versionName "1.0.2"
 //在bintrayUpload.gradle里android.defaultConfig.versionName作为该library的versionName
 
