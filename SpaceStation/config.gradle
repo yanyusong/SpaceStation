@@ -11,12 +11,14 @@ ext {
             "support-v4"                     : 'com.android.support:support-v4:23.1.1',
             "appcompat-v7"                   : 'com.android.support:appcompat-v7:23.1.1',
             "design"                         : 'com.android.support:design:23.1.1',
-            "butterknife"                    : 'com.jakewharton:butterknife:8.2.1',
-            "butterknife-compiler"           : 'com.jakewharton:butterknife-compiler:8.2.1',
+            "butterknife"                    : 'com.jakewharton:butterknife:8.4.0',
+            "butterknife-compiler"           : 'com.jakewharton:butterknife-compiler:8.4.0',
             "dagger2"                        : 'com.google.dagger:dagger:2.7',
             "dagger-compiler"                : 'com.google.dagger:dagger-compiler:2.7',
             "eventbus3"                      : 'org.greenrobot:eventbus:3.0.0',
             "picasso"                        : 'com.squareup.picasso:picasso:2.5.2',
+            //fragmentation
+            "fragmentation"                  : 'me.yokeyword:fragmentation:0.7.13',
             //analysis
             //leakcanary
             "leakcanary"                     : 'com.squareup.leakcanary:leakcanary-android:1.4-beta2',
@@ -30,8 +32,9 @@ ext {
             "retrofit2-converter-gson"       : 'com.squareup.retrofit2:converter-gson:2.1.0',
             "rxandroid"                      : 'io.reactivex:rxandroid:1.2.1',
             "retrofit2-adapter-rxjava"       : 'com.squareup.retrofit2:adapter-rxjava:2.1.0',
-            "rxlifecycle"                    : 'com.trello:rxlifecycle:0.6.1',
-            "rxlifecycle-components"         : 'com.trello:rxlifecycle-components:0.6.1',
+            "rxlifecycle"                    : 'com.trello:rxlifecycle:0.8.0',
+            "rxlifecycle-android"            : 'com.trello:rxlifecycle-android:0.8.0',
+            "rxlifecycle-components"         : 'com.trello:rxlifecycle-components:0.8.0',
             "okhttp3-logging-interceptor"    : 'com.squareup.okhttp3:logging-interceptor:3.4.1',
 
             //widget

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.FrameLayout;
 
-import com.zsygfddsd.spacestation.base.activity.BaseToolBarActivity;
+import com.zsygfddsd.spacestation.base.activity.Y_BaseToolBarActivity;
 
 import net.zsygfddsd.qujing.R;
 import net.zsygfddsd.qujing.modules.common.ContextModule;
@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WelfareListActivity extends BaseToolBarActivity {
+public class WelfareListActivity extends Y_BaseToolBarActivity {
 
     private static String Tag_WelfareListFragment = "WelfareListFragment";
 

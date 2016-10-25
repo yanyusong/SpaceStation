@@ -7,21 +7,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
+import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_BaseRecyclerViewNetFragment;
 
 import net.zsygfddsd.qujing.R;
-import net.zsygfddsd.qujing.base.adapter.GeneralRecyclerViewHolder;
-import net.zsygfddsd.qujing.base.module.network_recyclerview.BaseRecyclerViewNetFragment;
 import net.zsygfddsd.qujing.data.bean.Welfare;
-
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 
 /**
  * Created by mac on 16/5/12.
  */
-public class WelfareListFragment extends BaseRecyclerViewNetFragment<WelfareListContract.Presenter> implements WelfareListContract.View {
+public class WelfareListFragment extends Y_BaseRecyclerViewNetFragment<WelfareListContract.Presenter> implements WelfareListContract.View {
 
 
     private WelfareListContract.Presenter mPresenter;
@@ -96,31 +91,31 @@ public class WelfareListFragment extends BaseRecyclerViewNetFragment<WelfareList
 
     public void onItemClicked(final Welfare itemData, final int position) {
 
-        Observable.just(position)
-                .map(new Func1<Integer, String>() {
-                    @Override
-                    public String call(Integer integer) {
-                        return "当前点击的位置是" + position;
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<String>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        showToast(s);
-                    }
-                });
+        //        Observable.just(position)
+        //                .map(new Func1<Integer, String>() {
+        //                    @Override
+        //                    public String call(Integer integer) {
+        //                        return "当前点击的位置是" + position;
+        //                    }
+        //                })
+        //                .subscribeOn(AndroidSchedulers.mainThread())
+        //                .observeOn(AndroidSchedulers.mainThread())
+        //                .subscribe(new Subscriber<String>() {
+        //                    @Override
+        //                    public void onCompleted() {
+        //
+        //                    }
+        //
+        //                    @Override
+        //                    public void onError(Throwable e) {
+        //
+        //                    }
+        //
+        //                    @Override
+        //                    public void onNext(String s) {
+        //                        showToast(s);
+        //                    }
+        //                });
     }
 
 
