@@ -8,14 +8,14 @@ apply plugin: 'com.neenbedankt.android-apt'
 //version = "0.9"
 
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    compileSdkVersion 24
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 4
-        versionName "1.0.3"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 6
+        versionName "1.0.5"
 //在bintrayUpload.gradle里android.defaultConfig.versionName作为该library的versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -50,20 +50,20 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     //fragmentation
-    compile rootProject.ext.dependencies["fragmentation"]
+    compile 'me.yokeyword:fragmentation:0.7.13'
 
-    compile rootProject.ext.dependencies["appcompat-v7"]
+    compile 'com.android.support:appcompat-v7:25.0.0'
     //Rx
-    compile rootProject.ext.dependencies["retrofit2"]
-    compile rootProject.ext.dependencies["retrofit2-converter-gson"]
-    compile rootProject.ext.dependencies["rxandroid"]
-    compile rootProject.ext.dependencies["retrofit2-adapter-rxjava"]
-    compile rootProject.ext.dependencies["rxlifecycle"]
-    compile rootProject.ext.dependencies["rxlifecycle-android"]
-    compile rootProject.ext.dependencies["rxlifecycle-components"]
-    compile rootProject.ext.dependencies["okhttp3-logging-interceptor"]
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.trello:rxlifecycle:0.8.0'
+    compile 'com.trello:rxlifecycle-android:0.8.0'
+    compile 'com.trello:rxlifecycle-components:0.8.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //recyclerview
-    compile rootProject.ext.dependencies["recyclerview-v7"]
+    compile 'com.android.support:recyclerview-v7:25.0.0'
 
 }
 
