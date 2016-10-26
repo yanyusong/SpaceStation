@@ -2,8 +2,7 @@ package net.zsygfddsd.qujing;
 
 import android.content.Context;
 
-import com.zsygfddsd.spacestation.common.helpers.dagger.ApplicationScoped;
-
+import net.zsygfddsd.qujing.common.utils.ApplicationScoped;
 import net.zsygfddsd.qujing.modules.common.ContextModule;
 
 import dagger.Component;

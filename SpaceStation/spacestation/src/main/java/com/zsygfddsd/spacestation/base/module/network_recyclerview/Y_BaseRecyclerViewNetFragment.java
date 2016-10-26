@@ -1,5 +1,6 @@
 package com.zsygfddsd.spacestation.base.module.network_recyclerview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
@@ -70,15 +71,19 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         setArguments(bundle);
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        Log.e(TAG, "***********************onAttach=============");
+    }
+
     /**
-     * 在oncreate里边将除数据源以外的一些全局配置变量重置，初始化，避免由于onDetach后，重走
-     * 生命周期时留下无用的脏数据
-     *
      * @param savedInstanceState
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG, "***********************onCreate=============");
         Bundle args = getArguments();
         if (args != null) {
             this.itemLayoutId = args.getInt(ITEM_LAYOUT_ID) == -1 ? android.R.layout.simple_list_item_1 : args.getInt(ITEM_LAYOUT_ID);
@@ -86,17 +91,31 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         this.bottomItemLayoutId = getBottomViewLayoutId();
         this.isAlwaysRefreshPerVisible = getIsAlwaysRefreshPerVisible();
         this.isLazyLoad = getIsLazyLoad();
-        this.isViewCreated = false;
-        //        this.isFirstCreateView = true;
+        this.isFirstLoadData = true;
     }
 
     public boolean getIsLazyLoad() {
         return false;
     }
 
+    /**
+     * 在onCreateView里边将除数据源以外的一些全局配置变量重置，初始化，避免detach以后，
+     * 重新attach时生命周期留下无用的脏数据
+     * viewpager中detach以后，重新attach是走如下生命周期，
+     * onCreateView ---》 onResume。原理看：
+     * http://blog.csdn.net/afanyusong/article/details/52934839
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        this.isViewCreated = false;
+
+        //        this.isFirstCreateView = true;
         View view = null;
         //先不做布局的懒加载了
         //        if (!getUserVisibleHint() && isFirstCreateView && getPreCreateView() != null) {
@@ -104,6 +123,7 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         //        } else {
         view = initView(inflater, container, savedInstanceState);
         //        }
+        Log.e(TAG, "***********************onCreateView=============");
         return view;
     }
 
@@ -112,6 +132,7 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         super.onViewCreated(view, savedInstanceState);
         //        isFirstCreateView = false;
         this.isViewCreated = true;
+        Log.e(TAG, "***********************onViewCreated=============");
     }
 
     /**
@@ -124,7 +145,7 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         super.setUserVisibleHint(isVisibleToUser);
         Log.e(TAG, "***********************getUserVisibleHint=============" + getUserVisibleHint());
         if (isLazyLoad) {
-            Log.e(TAG, "***********************isLazyLoad=============" + true);
+            //            Log.e(TAG, "***********************isLazyLoad=============" + true);
             lazyInitData(null);
         }
     }
@@ -134,12 +155,26 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
             //不是第一次加载数据，即已经加载过数据了，不加载
             //界面不可见，即页面还没展示给用户的时候，不加载
             //没有承载数据的view时，即第一次进来或者onDetach以后，setUserVisibleHint时还没有oncreateview时，不加载
-            Log.e(TAG, "***********************lazyInitData=============" + "不加载数据");
+            Log.e(TAG, "***********************isFirstLoadData=" + isFirstLoadData + ",isViewCreated=" + isViewCreated + "=============" + "不加载数据");
             return;
         }
         initData(savedInstanceState);
-        Log.e(TAG, "***********************initData=============" + "初始化加载数据");
+        Log.e(TAG, "***********************isFirstLoadData=" + isFirstLoadData + ",isViewCreated=" + isViewCreated + "=============" + "初始化加载数据");
+        isFirstLoadData = false;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e(TAG, "***********************onStart=============");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e(TAG, "***********************onResume=============");
+    }
+
 
     /**
      * 在viewpger和多fragment的配合使用中，对于复杂布局可以用此方法替换来加快第一次创建时的速度
@@ -194,37 +229,6 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         recyclerView.addItemDecoration(itemDecoration);
         initRecyclerView(recyclerView);
         refreshView.setOnRefreshListener(this);
-        return view;
-    }
-
-    protected RecyclerView.ItemDecoration getItemDecoration(Context ct) {
-
-        return null;
-    }
-
-    public void setRefreshEnable(boolean enable) {
-        refreshView.setEnabled(enable);
-    }
-
-    private void initData(Bundle savedInstanceState) {
-        itemEntityList.clear();
-        itemEntityList
-                .addOnBind(itemLayoutId, new OnBind() {
-                    @Override
-                    public void onBindChildViewData(GeneralRecyclerViewHolder holder, Object itemData, int position) {
-                        bindChildViewsData(holder, itemData, position);
-                    }
-                })
-                .addOnBind(bottomItemLayoutId, new OnBind() {
-                    @Override
-                    public void onBindChildViewData(GeneralRecyclerViewHolder holder, Object itemData, int position) {
-                        if (hasNextPage) {
-                            holder.setText(R.id.item_bottom_text, "正在加载中...");
-                        } else {
-                            holder.setText(R.id.item_bottom_text, "您已滚动到最底部了");
-                        }
-                    }
-                });
         adapter = new MultiRecyclerAdapter(ct, itemEntityList);
         //        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
         //            @Override
@@ -236,9 +240,6 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         recyclerView.setAdapter(adapter);
 
         canLoadMore = getCanLoadMore();
-
-        onInitData();
-
         if (canLoadMore) {
 
             final RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
@@ -271,6 +272,41 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
             );
 
         }
+        return view;
+    }
+
+    protected RecyclerView.ItemDecoration getItemDecoration(Context ct) {
+
+        return null;
+    }
+
+    public void setRefreshEnable(boolean enable) {
+        refreshView.setEnabled(enable);
+    }
+
+    private void initData(Bundle savedInstanceState) {
+        itemEntityList.clear();
+        itemEntityList
+                .addOnBind(itemLayoutId, new OnBind() {
+                    @Override
+                    public void onBindChildViewData(GeneralRecyclerViewHolder holder, Object itemData, int position) {
+                        bindChildViewsData(holder, itemData, position);
+                    }
+                })
+                .addOnBind(bottomItemLayoutId, new OnBind() {
+                    @Override
+                    public void onBindChildViewData(GeneralRecyclerViewHolder holder, Object itemData, int position) {
+                        if (hasNextPage) {
+                            holder.setText(R.id.item_bottom_text, "正在加载中...");
+                        } else {
+                            holder.setText(R.id.item_bottom_text, "您已滚动到最底部了");
+                        }
+                    }
+                });
+
+        onInitData();
+
+
     }
 
     @CallSuper

@@ -1,4 +1,4 @@
-package net.zsygfddsd.qujing.modules.welfarelist;
+package net.zsygfddsd.qujing.modules.welviewpager;
 
 
 import net.zsygfddsd.qujing.common.utils.ActivityScoped;
@@ -11,9 +11,9 @@ import dagger.Component;
  * Created by mac on 2016/10/11.
  */
 @ActivityScoped
-@Component(modules = {RepositoryModule.class, WelfareListPresenterModule.class, ContextModule.class})
-public interface WelfareListActivityComponent {
+@Component(modules = {RepositoryModule.class, TabListPresenterModule.class, ContextModule.class})
+public interface TabsActivityComponent {
 
-    void inject(WelfareListActivity activity);
+    void inject(TabsActivity activity);
 
 }
