@@ -27,23 +27,30 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
     private Y_BasePageContract.IBaseRecyclerView mView;
 
     protected int page = 1;
-    protected int pageSize = Y_PageConfig.PageSize;
+    protected int pageSize = 10;
     protected volatile boolean isClear = false;//是否清空列表所有数据
     protected volatile List<D> items = new ArrayList<>();// list中当前最新页的数据
     protected volatile List<D> allItems = new ArrayList<>();// list中当前所有的数据
 
-    private DefaultLoadingDialogShowConfig defaultLoadingShowConfig = new DefaultLoadingDialogShowConfig(false, true, true);
+    private Y_PagePresenterConfig pageConfig;
 
-    public Y_BasePagePresenter(Context context, Y_BasePageContract.IBaseRecyclerView mView) {
+    public Y_BasePagePresenter(Context context, Y_BasePageContract.IBaseRecyclerView mView, Y_PagePresenterConfig pageConfig) {
         super(mView);
         this.context = context;
         this.mView = mView;
+        this.pageConfig = pageConfig;
+        this.page = pageConfig.FirstPageIndex;
+        this.pageSize = pageConfig.PageSize;
     }
+
+    public Y_BasePagePresenter(Context context, Y_BasePageContract.IBaseRecyclerView mView) {
+        this(context, mView, new Y_PagePresenterConfig.Builder().create());
+    }
+
 
     @Override
     public void start() {
         super.start();
-        defaultLoadingShowConfig = getDefaultLoadingShowConfig();
     }
 
     public NetAndErrorCheckerSubscriber getDefaultSubscriber() {
@@ -95,10 +102,6 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
         };
     }
 
-    public DefaultLoadingDialogShowConfig getDefaultLoadingShowConfig() {
-        return new DefaultLoadingDialogShowConfig(false, true, true);
-    }
-
     public List<D> getCurAllItems() {
         return allItems;
     }
@@ -120,37 +123,21 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
     public void onInitData() {
         page = 1;
         isClear = true;
-        loadData(getRequestObservable(page, pageSize), defaultLoadingShowConfig.isInitShow, false);
+        loadData(getRequestObservable(page, pageSize), pageConfig.isInitDialogShow, false);
     }
 
     @Override
     public void onLoadMore() {
         page++;
         isClear = false;
-        loadData(getRequestObservable(page, pageSize), defaultLoadingShowConfig.isLoadMoreShow, true);
+        loadData(getRequestObservable(page, pageSize), pageConfig.isLoadMoreDialogShow, true);
     }
 
     @Override
     public void onLoadRefresh() {
         page = 1;
         isClear = true;
-        loadData(getRequestObservable(page, pageSize), defaultLoadingShowConfig.isRefreshShow, true);
-    }
-
-    class DefaultLoadingDialogShowConfig {
-
-        boolean isInitShow = false;
-        boolean isRefreshShow = false;
-        boolean isLoadMoreShow = false;
-
-        public DefaultLoadingDialogShowConfig() {
-        }
-
-        public DefaultLoadingDialogShowConfig(boolean isInitShow, boolean isRefreshShow, boolean isLoadMoreShow) {
-            this.isInitShow = isInitShow;
-            this.isRefreshShow = isRefreshShow;
-            this.isLoadMoreShow = isLoadMoreShow;
-        }
+        loadData(getRequestObservable(page, pageSize), pageConfig.isRefreshDialogShow, true);
     }
 
 }

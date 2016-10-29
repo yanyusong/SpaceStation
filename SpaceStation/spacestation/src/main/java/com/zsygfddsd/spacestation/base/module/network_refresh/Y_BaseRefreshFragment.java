@@ -21,7 +21,6 @@ public abstract class Y_BaseRefreshFragment<T extends Y_BaseRefreshContract.IBas
 
     protected SwipeRefreshLayout refreshView;
 
-    private Y_BaseRefreshContract.IBaseRefreshPresenter mPresenter;
     private FrameLayout refreshContentView;
 
     @Override

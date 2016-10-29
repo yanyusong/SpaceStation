@@ -14,8 +14,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 6
-        versionName "1.0.5"
+        versionCode 9
+        versionName "1.0.7"
 //在bintrayUpload.gradle里android.defaultConfig.versionName作为该library的versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
