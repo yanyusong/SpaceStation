@@ -1,7 +1,6 @@
 package com.zsygfddsd.spacestation.base.module.network_refresh;
 
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -51,14 +50,6 @@ public abstract class Y_BaseRefreshFragment<T extends Y_BaseRefreshContract.IBas
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData(savedInstanceState);
-    }
-
-
-    @CallSuper
-    @Override
-    public void setPresenter(T presenter) {
-        super.setPresenter(presenter);
-        mPresenter = presenter;
     }
 
     @Override

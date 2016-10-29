@@ -3,7 +3,6 @@ package com.zsygfddsd.spacestation.base.module.network_recyclerview;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,7 +36,6 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
     protected SwipeRefreshLayout refreshView;
     protected RecyclerView recyclerView;
     protected MultiRecyclerAdapter adapter;
-    private T mPresenter;
     protected ItemEntityList itemEntityList = new ItemEntityList();
 
     protected int itemLayoutId = android.R.layout.simple_list_item_1;// item的布局id,默认是只有一个textview
@@ -51,8 +49,6 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
 
     private RecyclerView.ItemDecoration itemDecoration = null;
 
-    //是否每次可见时都刷新数据
-    private boolean isAlwaysRefreshPerVisible = false;
     //lazy懒加载
     private boolean isLazyLoad = false;//配置是否懒加载数据
     //先不做布局的懒加载了
@@ -89,7 +85,6 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
             this.itemLayoutId = args.getInt(ITEM_LAYOUT_ID) == -1 ? android.R.layout.simple_list_item_1 : args.getInt(ITEM_LAYOUT_ID);
         }
         this.bottomItemLayoutId = getBottomViewLayoutId();
-        this.isAlwaysRefreshPerVisible = getIsAlwaysRefreshPerVisible();
         this.isLazyLoad = getIsLazyLoad();
         this.isFirstLoadData = true;
     }
@@ -184,15 +179,6 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
     //    public View getPreCreateView() {
     //        return null;
     //    }
-
-    /**
-     * 是否每次可见都刷新数据
-     *
-     * @return
-     */
-    public boolean getIsAlwaysRefreshPerVisible() {
-        return false;
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -307,13 +293,6 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         onInitData();
 
 
-    }
-
-    @CallSuper
-    @Override
-    public void setPresenter(T presenter) {
-        super.setPresenter(presenter);
-        mPresenter = presenter;
     }
 
     /**

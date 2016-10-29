@@ -20,8 +20,6 @@ import net.zsygfddsd.qujing.data.bean.Welfare;
 public class TabListFragment extends Y_BaseRecyclerViewNetFragment<TabsContract.Presenter> implements TabsContract.View {
 
 
-    private TabsContract.Presenter mPresenter;
-
     public static TabListFragment newInstance(@LayoutRes int itemLayoutId) {
         TabListFragment welfareListFragment = new TabListFragment();
         welfareListFragment.init(itemLayoutId);
@@ -30,7 +28,6 @@ public class TabListFragment extends Y_BaseRecyclerViewNetFragment<TabsContract.
 
     @Override
     public void setPresenter(TabsContract.Presenter presenter) {
-        super.setPresenter(presenter);
         mPresenter = presenter;
     }
 
@@ -86,7 +83,7 @@ public class TabListFragment extends Y_BaseRecyclerViewNetFragment<TabsContract.
             Picasso.with(ct).load(data.getUrl()).resize(800, 800).centerCrop().into(welfareImg);
         }
         welfareDec.setText(data.getDesc());
-
+//        holder.itemView.setOnClickListener(View v)->{onItemClicked(data, position)}
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

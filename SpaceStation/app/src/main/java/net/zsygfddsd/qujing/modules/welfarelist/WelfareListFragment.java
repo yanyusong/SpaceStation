@@ -19,8 +19,6 @@ import net.zsygfddsd.qujing.data.bean.Welfare;
 public class WelfareListFragment extends Y_BaseRecyclerViewNetFragment<WelfareListContract.Presenter> implements WelfareListContract.View {
 
 
-    private WelfareListContract.Presenter mPresenter;
-
     public static WelfareListFragment newInstance(@LayoutRes int itemLayoutId) {
         WelfareListFragment welfareListFragment = new WelfareListFragment();
         welfareListFragment.init(itemLayoutId);
@@ -29,7 +27,6 @@ public class WelfareListFragment extends Y_BaseRecyclerViewNetFragment<WelfareLi
 
     @Override
     public void setPresenter(WelfareListContract.Presenter presenter) {
-        super.setPresenter(presenter);
         mPresenter = presenter;
     }
 

@@ -2,7 +2,6 @@ package com.zsygfddsd.spacestation.base.module.network;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 
@@ -13,10 +12,9 @@ import com.zsygfddsd.spacestation.base.module.base.Y_BaseFragment;
 /**
  * Created by mac on 16/3/1.
  */
-public class Y_BaseNetFragment<T extends Y_BaseContract.IBasePresenter> extends Y_BaseFragment<T> implements Y_BaseNetContract.IBaseNetView<T> {
+public abstract class Y_BaseNetFragment<T extends Y_BaseContract.IBasePresenter> extends Y_BaseFragment<T> implements Y_BaseNetContract.IBaseNetView<T> {
 
     public ProgressDialog pDialog;
-    private T mPresenter;
     private AlertDialog toLoginDialog;
 
     @Override
@@ -81,13 +79,5 @@ public class Y_BaseNetFragment<T extends Y_BaseContract.IBasePresenter> extends 
         //        }
         //        toLoginDialog.show();
     }
-
-    @CallSuper
-    @Override
-    public void setPresenter(T presenter) {
-        super.setPresenter(presenter);
-        this.mPresenter = presenter;
-    }
-
 
 }

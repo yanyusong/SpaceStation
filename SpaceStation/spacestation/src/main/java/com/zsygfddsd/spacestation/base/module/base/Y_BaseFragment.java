@@ -2,7 +2,6 @@ package com.zsygfddsd.spacestation.base.module.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
@@ -12,10 +11,10 @@ import com.zsygfddsd.spacestation.base.fragment.F_RxFragment;
 /**
  * Created by mac on 16/3/1.
  */
-public class Y_BaseFragment<T extends Y_BaseContract.IBasePresenter> extends F_RxFragment implements Y_BaseContract.IBaseView<T> {
+public abstract class Y_BaseFragment<T extends Y_BaseContract.IBasePresenter> extends F_RxFragment implements Y_BaseContract.IBaseView<T> {
 
     public Context ct;
-    private Y_BaseContract.IBasePresenter mPresenter;
+    public T mPresenter;
     private Toast toast;
 
     @Override
@@ -32,12 +31,6 @@ public class Y_BaseFragment<T extends Y_BaseContract.IBasePresenter> extends F_R
             toast.setText(content);
         }
         toast.show();
-    }
-
-    @CallSuper
-    @Override
-    public void setPresenter(T presenter) {
-        this.mPresenter = presenter;
     }
 
     @Override

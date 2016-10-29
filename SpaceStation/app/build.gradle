@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    compileSdkVersion 23
     buildToolsVersion '23.0.3'
 
     defaultConfig {
@@ -32,6 +32,11 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
 }
 
 dependencies {
@@ -39,13 +44,13 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //fragmentation
     //    compile 'me.yokeyword:fragmentation:0.7.13'
-//    compile rootProject.ext.dependencies["design"]
-//    compile rootProject.ext.dependencies["appcompat-v7"]
+    //    compile rootProject.ext.dependencies["design"]
+    //    compile rootProject.ext.dependencies["appcompat-v7"]
     compile 'com.android.support:design:25.0.0'
     compile 'com.android.support:appcompat-v7:25.0.0'
     //recyclerview
     compile 'com.android.support:recyclerview-v7:25.0.0'
-            //dagger 2
+    //dagger 2
     compile rootProject.ext.dependencies["dagger2"]
     apt rootProject.ext.dependencies["dagger-compiler"]
     //butterknife
