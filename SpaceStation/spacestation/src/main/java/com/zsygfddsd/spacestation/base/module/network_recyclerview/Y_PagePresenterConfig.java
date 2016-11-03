@@ -10,6 +10,7 @@ public class Y_PagePresenterConfig {
     int PageSize = 10;
 
     boolean isInitDialogShow = false;
+    boolean isInitRefreshIndicationShow = false;
     boolean isRefreshDialogShow = true;
     boolean isLoadMoreDialogShow = true;
 
@@ -23,6 +24,7 @@ public class Y_PagePresenterConfig {
         int PageSize = 10;
 
         boolean isInitDialogShow = false;
+        boolean isInitRefreshIndicationShow = false;
         boolean isRefreshDialogShow = true;
         boolean isLoadMoreDialogShow = true;
 
@@ -42,6 +44,11 @@ public class Y_PagePresenterConfig {
             return this;
         }
 
+        public Builder setInitRefreshIndicationShow(boolean initRefreshIndicationShow) {
+            isInitRefreshIndicationShow = initRefreshIndicationShow;
+            return this;
+        }
+
         public Builder setRefreshDialogShow(boolean refreshDialogShow) {
             isRefreshDialogShow = refreshDialogShow;
             return this;
@@ -56,6 +63,7 @@ public class Y_PagePresenterConfig {
             config.FirstPageIndex = this.FirstPageIndex;
             config.PageSize = this.PageSize;
             config.isInitDialogShow = this.isInitDialogShow;
+            config.isInitRefreshIndicationShow = this.isInitRefreshIndicationShow;
             config.isRefreshDialogShow = this.isRefreshDialogShow;
             config.isLoadMoreDialogShow = this.isLoadMoreDialogShow;
         }
