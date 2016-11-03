@@ -55,6 +55,7 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
     //    private boolean isFirstCreateView = true;//是否是第一次创建布局
     private boolean isFirstLoadData = true;//是否是第一次加载数据
     private boolean isViewCreated = false;//是否View已经创建好准备好接收数据了
+    private boolean isAlwaysRefreshForPerVisible = false;
 
     protected Bundle data2Bundle(int itemLayoutId) {
         Bundle bundle = new Bundle();
@@ -87,8 +88,15 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         this.bottomItemLayoutId = getBottomViewLayoutId();
         this.isLazyLoad = getIsLazyLoad();
         this.isFirstLoadData = true;
+        this.isAlwaysRefreshForPerVisible = getIsAlwaysRefreshForPerVisible();
     }
 
+    /**
+     * 可单独使用，若getIsAlwaysRefreshForPerVisible()=true,则必须同时使
+     * 此方法返回true。
+     *
+     * @return
+     */
     public boolean getIsLazyLoad() {
         return false;
     }
@@ -130,6 +138,12 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         Log.e(TAG, "***********************onViewCreated=============");
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        this.isViewCreated = false;
+    }
+
     /**
      * 在oncreateView之前执行的
      *
@@ -146,6 +160,12 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
     }
 
     public void lazyInitData(Bundle savedInstanceState) {
+        if (getUserVisibleHint() && isAlwaysRefreshForPerVisible) {
+            if (!isFirstLoadData) {
+                isFirstLoadData = true;
+            }
+        }
+
         if (!isFirstLoadData || !getUserVisibleHint() || !isViewCreated) {
             //不是第一次加载数据，即已经加载过数据了，不加载
             //界面不可见，即页面还没展示给用户的时候，不加载
@@ -153,9 +173,9 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
             Log.e(TAG, "***********************isFirstLoadData=" + isFirstLoadData + ",isViewCreated=" + isViewCreated + "=============" + "不加载数据");
             return;
         }
+
         initData(savedInstanceState);
         Log.e(TAG, "***********************isFirstLoadData=" + isFirstLoadData + ",isViewCreated=" + isViewCreated + "=============" + "初始化加载数据");
-        isFirstLoadData = false;
     }
 
     @Override
@@ -179,7 +199,6 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
     //    public View getPreCreateView() {
     //        return null;
     //    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -268,6 +287,21 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
 
     public void setRefreshEnable(boolean enable) {
         refreshView.setEnabled(enable);
+    }
+
+    @Override
+    public void setIsFirstLoadData(boolean isFirstLoadData) {
+        this.isFirstLoadData = isFirstLoadData;
+    }
+
+    /**
+     * 若使用每次进来都刷新数据的此功能，则必须同时使能懒加载功能
+     * 即：getIsLazyLoad()=true;
+     *
+     * @return
+     */
+    public boolean getIsAlwaysRefreshForPerVisible() {
+        return false;
     }
 
     private void initData(Bundle savedInstanceState) {

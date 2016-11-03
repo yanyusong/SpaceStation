@@ -94,6 +94,7 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
                         mView.showEmptyPage();
                     }
                     mView.updateData();
+                    mView.setIsFirstLoadData(false);
 
                 } else {
                     mView.showLoadingError();
@@ -123,6 +124,9 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
     public void onInitData() {
         page = 1;
         isClear = true;
+        if (pageConfig.isInitRefreshIndicationShow) {
+            mView.showRefreshIndication();
+        }
         loadData(getRequestObservable(page, pageSize), pageConfig.isInitDialogShow, false);
     }
 

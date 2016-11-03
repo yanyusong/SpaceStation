@@ -37,6 +37,11 @@ public class TabListFragment extends Y_BaseRecyclerViewNetFragment<TabsContract.
     }
 
     @Override
+    public boolean getIsAlwaysRefreshForPerVisible() {
+        return true;
+    }
+
+    @Override
     public void bindChildViewsData(GeneralRecyclerViewHolder holder, Object itemData, final int position) {
         final Welfare data = (Welfare) itemData;
 
@@ -83,7 +88,7 @@ public class TabListFragment extends Y_BaseRecyclerViewNetFragment<TabsContract.
             Picasso.with(ct).load(data.getUrl()).resize(800, 800).centerCrop().into(welfareImg);
         }
         welfareDec.setText(data.getDesc());
-//        holder.itemView.setOnClickListener(View v)->{onItemClicked(data, position)}
+        //        holder.itemView.setOnClickListener(View v)->{onItemClicked(data, position)}
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

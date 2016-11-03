@@ -20,6 +20,8 @@ public class Y_BasePageContract {
 
         void setRefreshEnable(boolean enable);
 
+        void setIsFirstLoadData(boolean isFirstLoadData);
+
         ItemEntityList getItemEntityList();
 
         //        List<D> getItemDatas();
