@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,7 +18,6 @@ public class Y_BaseActivity extends F_RxAppCompatActivity implements Y_BaseNetCo
     public Context mContext;
     public ProgressDialog pDialog;
     private Toast toast;
-    private AlertDialog toLoginDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,36 +83,8 @@ public class Y_BaseActivity extends F_RxAppCompatActivity implements Y_BaseNetCo
         showToast("暂无数据");
     }
 
-    public void showNoNetWork() {
-        showToast("网络连接失败");
-    }
-
     public F_RxAppCompatActivity getRxView() {
         return this;
-    }
-
-    @Override
-    public void showToLoginDialog() {
-        //        if (toLoginDialog == null) {
-        //            toLoginDialog = new AlertDialog.Builder(mContext)
-        //                    .setTitle("重新登录")
-        //                    .setMessage("登录过期,请重新登录")
-        //                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-        //                        @Override
-        //                        public void onClick(DialogInterface dialog, int which) {
-        //                            dialog.dismiss();
-        //                        }
-        //                    })
-        //                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-        //                        @Override
-        //                        public void onClick(DialogInterface dialog, int which) {
-        //                            Intent toLogin = new Intent(mContext, LoginActivity.class);
-        //                            mContext.startActivity(toLogin);
-        //                            dialog.dismiss();
-        //                        }
-        //                    }).create();
-        //        }
-        //        toLoginDialog.show();
     }
 
 }

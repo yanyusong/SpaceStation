@@ -3,7 +3,6 @@ package com.zsygfddsd.spacestation.base.module.network;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 
 import com.zsygfddsd.spacestation.base.module.base.Y_BaseContract;
 import com.zsygfddsd.spacestation.base.module.base.Y_BaseFragment;
@@ -15,7 +14,6 @@ import com.zsygfddsd.spacestation.base.module.base.Y_BaseFragment;
 public abstract class Y_BaseNetFragment<T extends Y_BaseContract.IBasePresenter> extends Y_BaseFragment<T> implements Y_BaseNetContract.IBaseNetView<T> {
 
     public ProgressDialog pDialog;
-    private AlertDialog toLoginDialog;
 
     @Override
     public void showLoading(boolean cancelable, @Nullable final ILoadingCancelListener listener) {
@@ -50,34 +48,6 @@ public abstract class Y_BaseNetFragment<T extends Y_BaseContract.IBasePresenter>
 
     public void showEmptyPage() {
         showToast("暂无数据");
-    }
-
-    public void showNoNetWork() {
-        showToast("网络连接失败");
-    }
-
-    @Override
-    public void showToLoginDialog() {
-        //        if (toLoginDialog == null) {
-        //            toLoginDialog = new AlertDialog.Builder(ct)
-        //                    .setTitle("重新登录")
-        //                    .setMessage("登录过期,请重新登录")
-        //                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-        //                        @Override
-        //                        public void onClick(DialogInterface dialog, int which) {
-        //                            dialog.dismiss();
-        //                        }
-        //                    })
-        //                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-        //                        @Override
-        //                        public void onClick(DialogInterface dialog, int which) {
-        //                            Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-        //                            getActivity().startActivity(toLogin);
-        //                            dialog.dismiss();
-        //                        }
-        //                    }).create();
-        //        }
-        //        toLoginDialog.show();
     }
 
 }

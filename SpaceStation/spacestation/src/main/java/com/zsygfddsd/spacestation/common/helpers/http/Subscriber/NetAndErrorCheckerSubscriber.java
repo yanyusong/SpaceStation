@@ -3,7 +3,7 @@ package com.zsygfddsd.spacestation.common.helpers.http.Subscriber;
 import android.content.Context;
 import android.support.annotation.CallSuper;
 
-import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetContract;
+import com.zsygfddsd.spacestation.common.ErrorHandler;
 import com.zsygfddsd.spacestation.common.utils.DeviceUtils;
 import com.zsygfddsd.spacestation.data.bean.ComRespInfo;
 
@@ -15,11 +15,11 @@ import rx.Subscriber;
 public abstract class NetAndErrorCheckerSubscriber<T> extends Subscriber<ComRespInfo<T>> {
 
     private Context context;
-    private Y_BaseNetContract.INetView netView;
+    private ErrorHandler errorHandler;
 
-    public NetAndErrorCheckerSubscriber(Context context, Y_BaseNetContract.INetView netView) {
+    public NetAndErrorCheckerSubscriber(Context context, ErrorHandler errorHandler) {
         this.context = context;
-        this.netView = netView;
+        this.errorHandler = errorHandler;
     }
 
     @Override
@@ -29,17 +29,14 @@ public abstract class NetAndErrorCheckerSubscriber<T> extends Subscriber<ComResp
             if (!isUnsubscribed()) {
                 unsubscribe();
             }
-            netView.showNoNetWork();
+            errorHandler.handlerNotHasNetwork(context);
         }
     }
 
     @CallSuper
     @Override
     public void onNext(ComRespInfo<T> tComRespInfo) {
-        // TODO: 2016/10/17 公共errorCode处理
-        //        if ((tComRespInfo.getResult() != 1) && tComRespInfo.getResultcode() == 99 || tComRespInfo.getResultcode() == 97) {
-        //            netView.showToLoginDialog();
-        //        }
+        errorHandler.handlerHttpError(context, tComRespInfo);
     }
 
 

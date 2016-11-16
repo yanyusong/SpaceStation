@@ -1,5 +1,8 @@
 package com.zsygfddsd.spacestation.base.module.network_recyclerview;
 
+import com.zsygfddsd.spacestation.common.DefaultErrorHandler;
+import com.zsygfddsd.spacestation.common.ErrorHandler;
+
 /**
  * Created by mac on 16/7/27.
  */
@@ -14,6 +17,8 @@ public class Y_PagePresenterConfig {
     boolean isRefreshDialogShow = true;
     boolean isLoadMoreDialogShow = true;
 
+    ErrorHandler errorHandler = new DefaultErrorHandler();
+
     private Y_PagePresenterConfig() {
     }
 
@@ -27,6 +32,8 @@ public class Y_PagePresenterConfig {
         boolean isInitRefreshIndicationShow = false;
         boolean isRefreshDialogShow = true;
         boolean isLoadMoreDialogShow = true;
+
+        ErrorHandler errorHandler = new DefaultErrorHandler();
 
 
         public Builder setFirstPageIndex(int firstPageIndex) {
@@ -59,6 +66,11 @@ public class Y_PagePresenterConfig {
             return this;
         }
 
+        public Builder setErrorHandler(ErrorHandler mErrorHandler) {
+            errorHandler = mErrorHandler;
+            return this;
+        }
+
         void applyConfig(Y_PagePresenterConfig config) {
             config.FirstPageIndex = this.FirstPageIndex;
             config.PageSize = this.PageSize;
@@ -66,6 +78,7 @@ public class Y_PagePresenterConfig {
             config.isInitRefreshIndicationShow = this.isInitRefreshIndicationShow;
             config.isRefreshDialogShow = this.isRefreshDialogShow;
             config.isLoadMoreDialogShow = this.isLoadMoreDialogShow;
+            config.errorHandler = this.errorHandler;
         }
 
         public Y_PagePresenterConfig create() {

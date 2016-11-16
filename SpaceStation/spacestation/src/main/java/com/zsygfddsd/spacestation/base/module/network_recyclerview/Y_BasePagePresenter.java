@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.ItemEntityList;
 import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetPresenter;
+import com.zsygfddsd.spacestation.common.ErrorHandler;
 import com.zsygfddsd.spacestation.common.helpers.http.ObservableFactory;
 import com.zsygfddsd.spacestation.common.helpers.http.Subscriber.NetAndErrorCheckerSubscriber;
 import com.zsygfddsd.spacestation.common.helpers.http.transformer.EmitBeforeAndAfterTransformer;
@@ -34,6 +35,8 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
 
     private Y_PagePresenterConfig pageConfig;
 
+    protected ErrorHandler errorHandler;
+
     public Y_BasePagePresenter(Context context, Y_BasePageContract.IBaseRecyclerView mView, Y_PagePresenterConfig pageConfig) {
         super(mView);
         this.context = context;
@@ -41,6 +44,7 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
         this.pageConfig = pageConfig;
         this.page = pageConfig.FirstPageIndex;
         this.pageSize = pageConfig.PageSize;
+        this.errorHandler = pageConfig.errorHandler;
     }
 
     public Y_BasePagePresenter(Context context, Y_BasePageContract.IBaseRecyclerView mView) {
@@ -54,7 +58,7 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
     }
 
     public NetAndErrorCheckerSubscriber getDefaultSubscriber() {
-        return new NetAndErrorCheckerSubscriber<DATA>(context, mView) {
+        return new NetAndErrorCheckerSubscriber<DATA>(context, errorHandler) {
 
             @Override
             public void onCompleted() {
@@ -134,14 +138,14 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
     public void onLoadMore() {
         page++;
         isClear = false;
-        loadData(getRequestObservable(page, pageSize), pageConfig.isLoadMoreDialogShow, true);
+        loadData(getRequestObservable(page, pageSize), pageConfig.isLoadMoreDialogShow, false);
     }
 
     @Override
     public void onLoadRefresh() {
         page = 1;
         isClear = true;
-        loadData(getRequestObservable(page, pageSize), pageConfig.isRefreshDialogShow, true);
+        loadData(getRequestObservable(page, pageSize), pageConfig.isRefreshDialogShow, false);
     }
 
 }

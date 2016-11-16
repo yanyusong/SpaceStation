@@ -27,10 +27,6 @@ public class Y_BaseNetContract {
 
         void showEmptyPage();
 
-        void showNoNetWork();
-
-        void showToLoginDialog();
-
     }
 
 }

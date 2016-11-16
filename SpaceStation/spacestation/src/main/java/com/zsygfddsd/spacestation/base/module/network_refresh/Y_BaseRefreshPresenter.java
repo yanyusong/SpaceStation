@@ -21,10 +21,17 @@ public abstract class Y_BaseRefreshPresenter<DATA> extends Y_BaseNetPresenter im
     private Context context;
     private Y_BaseRefreshContract.IBaseRefreshView mView;
 
-    public Y_BaseRefreshPresenter(Context context, Y_BaseRefreshContract.IBaseRefreshView mView) {
+    private Y_RefreshPresenterConfig config;
+
+    public Y_BaseRefreshPresenter(Context context, Y_BaseRefreshContract.IBaseRefreshView mView, Y_RefreshPresenterConfig config) {
         super(mView);
         this.context = context;
         this.mView = mView;
+        this.config = config;
+    }
+
+    public Y_BaseRefreshPresenter(Context context, Y_BaseRefreshContract.IBaseRefreshView mView) {
+        this(context, mView, new Y_RefreshPresenterConfig.Builder().create());
     }
 
     @Override
@@ -33,7 +40,7 @@ public abstract class Y_BaseRefreshPresenter<DATA> extends Y_BaseNetPresenter im
     }
 
     public NetAndErrorCheckerSubscriber getDefaultSubscriber() {
-        return new NetAndErrorCheckerSubscriber<DATA>(context, mView) {
+        return new NetAndErrorCheckerSubscriber<DATA>(context, config.errorHandler) {
 
             @Override
             public void onCompleted() {
