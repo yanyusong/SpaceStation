@@ -46,6 +46,8 @@ public class Y_BasePageContract {
 
         void onLoadRefresh();
 
+        void clearList();
+
     }
 
 }

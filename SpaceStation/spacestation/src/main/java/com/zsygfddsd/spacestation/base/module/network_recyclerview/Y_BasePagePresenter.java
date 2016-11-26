@@ -126,7 +126,7 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
 
     @Override
     public void onInitData() {
-        page = 1;
+        page = pageConfig.FirstPageIndex;
         isClear = true;
         if (pageConfig.isInitRefreshIndicationShow) {
             mView.showRefreshIndication();
@@ -143,11 +143,19 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
 
     @Override
     public void onLoadRefresh() {
-        page = 1;
+        page = pageConfig.FirstPageIndex;
         isClear = true;
         loadData(getRequestObservable(page, pageSize), pageConfig.isRefreshDialogShow, false);
     }
 
+    @Override
+    public void clearList() {
+        page = pageConfig.FirstPageIndex;
+        isClear = true;
+        mView.getItemEntityList().clearItemDatas();
+        allItems.clear();
+        mView.updateData();
+    }
 }
 
 

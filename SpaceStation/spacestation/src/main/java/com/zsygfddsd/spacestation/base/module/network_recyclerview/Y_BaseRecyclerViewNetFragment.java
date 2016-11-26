@@ -57,6 +57,8 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
     private boolean isViewCreated = false;//是否View已经创建好准备好接收数据了
     private boolean isAlwaysRefreshForPerVisible = false;
 
+    private boolean isLoadDataFirstEnter = true;//第一次进来是否加载数据
+
     protected Bundle data2Bundle(int itemLayoutId) {
         Bundle bundle = new Bundle();
         bundle.putInt(ITEM_LAYOUT_ID, itemLayoutId);
@@ -300,7 +302,7 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
      *
      * @return
      */
-    public boolean getIsAlwaysRefreshForPerVisible() {
+    protected boolean getIsAlwaysRefreshForPerVisible() {
         return false;
     }
 
@@ -324,8 +326,9 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
                     }
                 });
 
-        onInitData();
-
+        if (isLoadDataFirstEnter) {
+            onInitData();
+        }
 
     }
 
@@ -356,6 +359,11 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         if (refreshView.isRefreshing()) {
             refreshView.setRefreshing(false);
         }
+    }
+
+    //第一次进来的时候是否加载数据
+    protected boolean getIsLoadDataFirstEnter() {
+        return true;
     }
 
     /**
