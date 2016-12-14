@@ -78,6 +78,9 @@ public abstract class Y_BaseRefreshPresenter<DATA> extends Y_BaseNetPresenter im
         loadData(getRequestObservable());
     }
 
+    public Y_RefreshPresenterConfig getConfig() {
+        return config;
+    }
 }
 
 

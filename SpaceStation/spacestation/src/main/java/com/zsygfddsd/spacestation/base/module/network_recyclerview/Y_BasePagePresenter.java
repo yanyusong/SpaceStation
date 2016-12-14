@@ -156,6 +156,10 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
         allItems.clear();
         mView.updateData();
     }
+
+    public Y_PagePresenterConfig getPageConfig() {
+        return pageConfig;
+    }
 }
 
 

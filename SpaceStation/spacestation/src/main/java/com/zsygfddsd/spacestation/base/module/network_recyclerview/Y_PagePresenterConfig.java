@@ -8,16 +8,16 @@ import com.zsygfddsd.spacestation.common.ErrorHandler;
  */
 public class Y_PagePresenterConfig {
 
-    int FirstPageIndex = 1;
+    public int FirstPageIndex = 1;
 
-    int PageSize = 10;
+    public int PageSize = 10;
 
-    boolean isInitDialogShow = false;
-    boolean isInitRefreshIndicationShow = false;
-    boolean isRefreshDialogShow = true;
-    boolean isLoadMoreDialogShow = true;
+    public boolean isInitDialogShow = false;
+    public boolean isInitRefreshIndicationShow = false;
+    public boolean isRefreshDialogShow = true;
+    public boolean isLoadMoreDialogShow = true;
 
-    ErrorHandler errorHandler = new DefaultErrorHandler();
+    public ErrorHandler errorHandler = new DefaultErrorHandler();
 
     private Y_PagePresenterConfig() {
     }

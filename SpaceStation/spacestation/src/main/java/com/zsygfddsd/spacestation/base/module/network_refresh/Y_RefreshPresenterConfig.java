@@ -8,7 +8,7 @@ import com.zsygfddsd.spacestation.common.ErrorHandler;
  */
 public class Y_RefreshPresenterConfig {
 
-    ErrorHandler errorHandler = new DefaultErrorHandler();
+    public ErrorHandler errorHandler = new DefaultErrorHandler();
 
     private Y_RefreshPresenterConfig() {
     }
