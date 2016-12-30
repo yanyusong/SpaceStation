@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.zsygfddsd.spacestation.R;
-import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetFragment;
+import com.zsygfddsd.spacestation.base.module.network.Y_NetView;
 
 
 /**
@@ -17,16 +17,12 @@ import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetFragment;
  * T: 是IBaseRecyclerViewPresenter
  * D: 是item的bean
  */
-public abstract class Y_BaseRefreshFragment<T extends Y_BaseRefreshContract.IBaseRefreshPresenter, DATA> extends Y_BaseNetFragment<T> implements Y_BaseRefreshContract.IBaseRefreshView<T, DATA>, SwipeRefreshLayout.OnRefreshListener {
+public abstract class Y_BaseRefreshView<T extends Y_I_NetRefreshPresenter, DATA> implements Y_I_NetRefreshView<DATA> {
 
     protected SwipeRefreshLayout refreshView;
 
     private FrameLayout refreshContentView;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Nullable
     @Override
@@ -38,12 +34,6 @@ public abstract class Y_BaseRefreshFragment<T extends Y_BaseRefreshContract.IBas
         refreshContentView.addView(initView(inflater, container, savedInstanceState));
         return view;
     }
-
-    protected abstract View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
-
-
-    protected abstract void initData(Bundle savedInstanceState);
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

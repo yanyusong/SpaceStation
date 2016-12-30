@@ -1,7 +1,7 @@
 package com.zsygfddsd.spacestation.common.helpers.http.transformer;
 
 
-import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetContract;
+import com.zsygfddsd.spacestation.base.module.network.Y_I_NetView;
 import com.zsygfddsd.spacestation.data.bean.ComRespInfo;
 
 import rx.Observable;
@@ -16,7 +16,7 @@ import rx.functions.Action0;
  */
 public class EmitBeforeAndAfterTransformer<T> implements Observable.Transformer<ComRespInfo<T>, ComRespInfo<T>> {
 
-    private Y_BaseNetContract.IBaseNetView netView;
+    private Y_I_NetView netView;
 
     private Subscriber subscriber;
 
@@ -24,14 +24,14 @@ public class EmitBeforeAndAfterTransformer<T> implements Observable.Transformer<
 
     private boolean canLoadCelable;
 
-    public EmitBeforeAndAfterTransformer(Y_BaseNetContract.IBaseNetView netView, Subscriber subscriber, boolean canShowLoading, boolean canLoadCelable) {
+    public EmitBeforeAndAfterTransformer(Y_I_NetView netView, Subscriber subscriber, boolean canShowLoading, boolean canLoadCelable) {
         this.netView = netView;
         this.subscriber = subscriber;
         this.canShowLoading = canShowLoading;
         this.canLoadCelable = canLoadCelable;
     }
 
-    public EmitBeforeAndAfterTransformer(Y_BaseNetContract.IBaseNetView netView, Subscriber subscriber) {
+    public EmitBeforeAndAfterTransformer(Y_I_NetView netView, Subscriber subscriber) {
         this.netView = netView;
         this.subscriber = subscriber;
         this.canShowLoading = true;
@@ -44,7 +44,7 @@ public class EmitBeforeAndAfterTransformer<T> implements Observable.Transformer<
             @Override
             public void call() {
                 if (canShowLoading) {
-                    netView.showLoading(canLoadCelable, new Y_BaseNetContract.IBaseNetView.ILoadingCancelListener() {
+                    netView.showLoading(canLoadCelable, new Y_I_NetView.ILoadingCancelListener() {
                         @Override
                         public void onLoadCancelListener() {
                             if (!subscriber.isUnsubscribed()) {

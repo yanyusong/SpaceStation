@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
-import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_BaseRecyclerViewNetFragment;
+import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_NetRecyclerView;
 
 import net.zsygfddsd.qujing.R;
 import net.zsygfddsd.qujing.data.bean.Welfare;
@@ -17,7 +17,7 @@ import net.zsygfddsd.qujing.data.bean.Welfare;
 /**
  * Created by mac on 16/5/12.
  */
-public class TabListFragment extends Y_BaseRecyclerViewNetFragment<TabsContract.Presenter> implements TabsContract.View {
+public class TabListFragment extends Y_NetRecyclerView<TabsContract.Presenter> implements TabsContract.View {
 
 
     public static TabListFragment newInstance(@LayoutRes int itemLayoutId) {

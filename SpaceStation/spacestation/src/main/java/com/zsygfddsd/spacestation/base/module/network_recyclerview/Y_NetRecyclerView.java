@@ -1,9 +1,9 @@
 package com.zsygfddsd.spacestation.base.module.network_recyclerview;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +18,6 @@ import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.ItemEntityList;
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.MultiRecyclerAdapter;
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.OnBind;
-import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetFragment;
 import com.zsygfddsd.spacestation.common.widgets.DividerGridItemDecoration;
 
 
@@ -27,7 +26,7 @@ import com.zsygfddsd.spacestation.common.widgets.DividerGridItemDecoration;
  * T: 是IBaseRecyclerViewPresenter
  * D: 是item的bean
  */
-public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract.IBaseRecyclerViewPresenter> extends Y_BaseNetFragment<T> implements Y_BasePageContract.IBaseRecyclerView<T>, SwipeRefreshLayout.OnRefreshListener {
+public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
 
     public static final String TAG = "YRecyFrag";
 
@@ -59,6 +58,14 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
 
     private boolean isLoadDataFirstEnter = true;//第一次进来是否加载数据
 
+    private Fragment fragment;
+    private Context ct;
+
+    public Y_NetRecyclerView(Context ct, Fragment fragment) {
+        this.ct = ct;
+        this.fragment = fragment;
+    }
+
     protected Bundle data2Bundle(int itemLayoutId) {
         Bundle bundle = new Bundle();
         bundle.putInt(ITEM_LAYOUT_ID, itemLayoutId);
@@ -67,23 +74,11 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
 
     protected void init(int itemLayoutId) {
         Bundle bundle = data2Bundle(itemLayoutId);
-        setArguments(bundle);
+        fragment.setArguments(bundle);
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        Log.e(TAG, "***********************onAttach=============");
-    }
-
-    /**
-     * @param savedInstanceState
-     */
-    @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.e(TAG, "***********************onCreate=============");
-        Bundle args = getArguments();
+        Bundle args = fragment.getArguments();
         if (args != null) {
             this.itemLayoutId = args.getInt(ITEM_LAYOUT_ID) == -1 ? android.R.layout.simple_list_item_1 : args.getInt(ITEM_LAYOUT_ID);
         }
@@ -116,7 +111,6 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
      * @return
      */
     @Nullable
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.isViewCreated = false;
 
@@ -132,17 +126,13 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         return view;
     }
 
-    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         //        isFirstCreateView = false;
         this.isViewCreated = true;
         Log.e(TAG, "***********************onViewCreated=============");
     }
 
-    @Override
     public void onDestroyView() {
-        super.onDestroyView();
         this.isViewCreated = false;
     }
 
@@ -151,10 +141,8 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
      *
      * @param isVisibleToUser
      */
-    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        Log.e(TAG, "***********************getUserVisibleHint=============" + getUserVisibleHint());
+        Log.e(TAG, "***********************getUserVisibleHint=============" + fragment.getUserVisibleHint());
         if (isLazyLoad) {
             //            Log.e(TAG, "***********************isLazyLoad=============" + true);
             lazyInitData(null);
@@ -162,13 +150,13 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
     }
 
     public void lazyInitData(Bundle savedInstanceState) {
-        if (getUserVisibleHint() && isAlwaysRefreshForPerVisible) {
+        if (fragment.getUserVisibleHint() && isAlwaysRefreshForPerVisible) {
             if (!isFirstLoadData) {
                 isFirstLoadData = true;
             }
         }
 
-        if (!isFirstLoadData || !getUserVisibleHint() || !isViewCreated) {
+        if (!isFirstLoadData || !fragment.getUserVisibleHint() || !isViewCreated) {
             //不是第一次加载数据，即已经加载过数据了，不加载
             //界面不可见，即页面还没展示给用户的时候，不加载
             //没有承载数据的view时，即第一次进来或者onDetach以后，setUserVisibleHint时还没有oncreateview时，不加载
@@ -180,19 +168,6 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         Log.e(TAG, "***********************isFirstLoadData=" + isFirstLoadData + ",isViewCreated=" + isViewCreated + "=============" + "初始化加载数据");
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.e(TAG, "***********************onStart=============");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e(TAG, "***********************onResume=============");
-    }
-
-
     /**
      * 在viewpger和多fragment的配合使用中，对于复杂布局可以用此方法替换来加快第一次创建时的速度
      * 如果为null，则代表不设置预加载布局,
@@ -201,9 +176,7 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
     //    public View getPreCreateView() {
     //        return null;
     //    }
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         Log.e(TAG, "***********************onActivityCreated=============");
         lazyInitData(savedInstanceState);
     }
@@ -269,7 +242,7 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
                                                      if (lastVisibleItemPos[0] == totalCount - 1) {
                                                          if (isHasNextPage()) {
                                                              //加载下一页
-                                                             onLoadMore();
+                                                             loadNextPage();
                                                          } else {
 
                                                          }
@@ -327,7 +300,7 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
                 });
 
         if (isLoadDataFirstEnter) {
-            onInitData();
+            loadFirstPage();
         }
 
     }
@@ -344,7 +317,7 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
 
     @Override
     public void onRefresh() {
-        onLoadRefresh();
+        loadFirstPage();
     }
 
     @Override
@@ -414,35 +387,9 @@ public abstract class Y_BaseRecyclerViewNetFragment<T extends Y_BasePageContract
         return R.layout.y_item_recycler_bottom_view;
     }
 
-    /**
-     * 第一页的数据加载
-     */
-    public void onInitData() {
-        mPresenter.onInitData();
-    }
+    public abstract void loadFirstPage();
 
-    /**
-     * 加载更多
-     */
-    public void onLoadMore() {
-        mPresenter.onLoadMore();
-    }
-
-    /**
-     * 下拉刷新
-     */
-    public void onLoadRefresh() {
-        mPresenter.onLoadRefresh();
-    }
-
-    /**
-     * 给Item布局的各个控件设置分配好的数据
-     *
-     * @param holder   item的holder，利用getChildView(eg:控件id)的方法得到该控件
-     * @param itemData 封装好的分配给该item的数据，数据一般为Hashmap<K,V>或者Modle等类型
-     * @param position 当前item的position
-     */
-    public abstract void bindChildViewsData(GeneralRecyclerViewHolder holder, Object itemData, int position);
+    public abstract void loadNextPage();
 
 
 }

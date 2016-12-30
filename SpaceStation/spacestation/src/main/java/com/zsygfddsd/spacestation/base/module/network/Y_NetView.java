@@ -1,19 +1,23 @@
 package com.zsygfddsd.spacestation.base.module.network;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.Nullable;
-
-import com.zsygfddsd.spacestation.base.module.base.Y_BaseContract;
-import com.zsygfddsd.spacestation.base.module.base.Y_BaseFragment;
 
 
 /**
  * Created by mac on 16/3/1.
  */
-public abstract class Y_BaseNetFragment<T extends Y_BaseContract.IBasePresenter> extends Y_BaseFragment<T> implements Y_BaseNetContract.IBaseNetView<T> {
+public abstract class Y_NetView implements Y_I_NetView {
 
-    public ProgressDialog pDialog;
+    private ProgressDialog pDialog;
+
+    private Context ct;
+
+    public Y_NetView(Context ct) {
+        this.ct = ct;
+    }
 
     @Override
     public void showLoading(boolean cancelable, @Nullable final ILoadingCancelListener listener) {
@@ -40,14 +44,6 @@ public abstract class Y_BaseNetFragment<T extends Y_BaseContract.IBasePresenter>
             pDialog.dismiss();
             pDialog = null;
         }
-    }
-
-    public void showLoadingError() {
-        showToast("获取失败");
-    }
-
-    public void showEmptyPage() {
-        showToast("暂无数据");
     }
 
 }

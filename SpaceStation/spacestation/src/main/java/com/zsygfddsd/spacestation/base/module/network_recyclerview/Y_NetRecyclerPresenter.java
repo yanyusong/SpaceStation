@@ -4,7 +4,8 @@ package com.zsygfddsd.spacestation.base.module.network_recyclerview;
 import android.content.Context;
 
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.ItemEntityList;
-import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetPresenter;
+import com.zsygfddsd.spacestation.base.module.base.Y_I_View;
+import com.zsygfddsd.spacestation.base.module.network.Y_I_NetView;
 import com.zsygfddsd.spacestation.common.ErrorHandler;
 import com.zsygfddsd.spacestation.common.helpers.http.ObservableFactory;
 import com.zsygfddsd.spacestation.common.helpers.http.Subscriber.NetAndErrorCheckerSubscriber;
@@ -22,10 +23,12 @@ import rx.Observable;
  * DATA:表示ComRespInfo<DATA> 中的DATA的bean
  * D:表示每一个item的bean
  */
-public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter implements Y_BasePageContract.IBaseRecyclerViewPresenter {
+public abstract class Y_NetRecyclerPresenter<DATA, D> implements Y_I_NetRecyclerPresenter<DATA, D> {
 
     protected Context context;
-    private Y_BasePageContract.IBaseRecyclerView mView;
+    private Y_I_View mView;
+    private Y_I_NetView mNetView;
+    private Y_I_NetRecyclerView mNetRecyclerView;
 
     protected int page = 1;
     protected int pageSize = 10;
@@ -37,47 +40,43 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
 
     protected ErrorHandler errorHandler;
 
-    public Y_BasePagePresenter(Context context, Y_BasePageContract.IBaseRecyclerView mView, Y_PagePresenterConfig pageConfig) {
-        super(mView);
+    public Y_NetRecyclerPresenter(Context context, Y_I_View mView, Y_I_NetView mNetView, Y_I_NetRecyclerView mNetRecyclerView, Y_PagePresenterConfig pageConfig) {
         this.context = context;
         this.mView = mView;
+        this.mNetView = mNetView;
+        this.mNetRecyclerView = mNetRecyclerView;
         this.pageConfig = pageConfig;
         this.page = pageConfig.FirstPageIndex;
         this.pageSize = pageConfig.PageSize;
         this.errorHandler = pageConfig.errorHandler;
     }
 
-    public Y_BasePagePresenter(Context context, Y_BasePageContract.IBaseRecyclerView mView) {
-        this(context, mView, new Y_PagePresenterConfig.Builder().create());
+    public Y_NetRecyclerPresenter(Context context, Y_I_View mView, Y_I_NetView mNetView, Y_I_NetRecyclerView mNetRecyclerView) {
+        this(context, mView, mNetView, mNetRecyclerView, new Y_PagePresenterConfig.Builder().create());
     }
 
-
-    @Override
-    public void start() {
-        super.start();
-    }
 
     public NetAndErrorCheckerSubscriber getDefaultSubscriber() {
         return new NetAndErrorCheckerSubscriber<DATA>(context, errorHandler) {
 
             @Override
             public void onCompleted() {
-                mView.hideRefreshInfication();
+                mNetRecyclerView.hideRefreshInfication();
             }
 
             @Override
             public void onError(Throwable e) {
-                mView.showLoadingError();
-                mView.hideRefreshInfication();
+                mNetView.showLoadingError();
+                mNetRecyclerView.hideRefreshInfication();
             }
 
             @Override
             public void onNext(ComRespInfo<DATA> dataComRespInfo) {
                 super.onNext(dataComRespInfo);
                 if (dataComRespInfo.getResult()) {
-                    ItemEntityList itemEntityList = mView.getItemEntityList();
+                    ItemEntityList itemEntityList = mNetRecyclerView.getItemEntityList();
                     boolean hasnext = getIsHasNextFromResponse(dataComRespInfo.getData());
-                    mView.setHasNextPage(hasnext);
+                    mNetRecyclerView.setHasNextPage(hasnext);
                     items.clear();
                     items = getListFromResponse(dataComRespInfo.getData());
 
@@ -89,19 +88,19 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
                     if (itemEntityList.getItemCount() >= pageSize) {
                         itemEntityList.remove(itemEntityList.getItemCount() - 1);
                     }
-                    itemEntityList.addItems(mView.getItemLayoutId(), items);
+                    itemEntityList.addItems(mNetRecyclerView.getItemLayoutId(), items);
                     allItems.addAll(items);
                     if (itemEntityList.getItemCount() >= pageSize) {
-                        itemEntityList.addItem(mView.getBottomViewLayoutId(), "bottomText");
+                        itemEntityList.addItem(mNetRecyclerView.getBottomViewLayoutId(), "bottomText");
                     }
                     if (itemEntityList.getItemCount() == 0) {
-                        mView.showEmptyPage();
+                        mNetView.showEmptyPage();
                     }
-                    mView.updateData();
-                    mView.setIsFirstLoadData(false);
+                    mNetRecyclerView.updateData();
+                    mNetRecyclerView.setIsFirstLoadData(false);
 
                 } else {
-                    mView.showLoadingError();
+                    mNetView.showLoadingError();
                 }
             }
         };
@@ -111,16 +110,10 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
         return allItems;
     }
 
-    public abstract boolean getIsHasNextFromResponse(DATA result);
-
-    public abstract List<D> getListFromResponse(DATA result);
-
-    public abstract Observable<ComRespInfo<DATA>> getRequestObservable(int page, int pageSize);
-
     public void loadData(Observable<ComRespInfo<DATA>> observable, boolean canShowLoading, boolean canLoadCelable) {
         NetAndErrorCheckerSubscriber subscriber = getDefaultSubscriber();
         ObservableFactory.createNetObservable(context, observable, mView.getRxView())
-                .compose(new EmitBeforeAndAfterTransformer<DATA>(mView, subscriber, canShowLoading, canLoadCelable))
+                .compose(new EmitBeforeAndAfterTransformer<DATA>(mNetView, subscriber, canShowLoading, canLoadCelable))
                 .subscribe(subscriber);
     }
 
@@ -129,7 +122,7 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
         page = pageConfig.FirstPageIndex;
         isClear = true;
         if (pageConfig.isInitRefreshIndicationShow) {
-            mView.showRefreshIndication();
+            mNetRecyclerView.showRefreshIndication();
         }
         loadData(getRequestObservable(page, pageSize), pageConfig.isInitDialogShow, false);
     }
@@ -152,9 +145,9 @@ public abstract class Y_BasePagePresenter<DATA, D> extends Y_BaseNetPresenter im
     public void clearList() {
         page = pageConfig.FirstPageIndex;
         isClear = true;
-        mView.getItemEntityList().clearItemDatas();
+        mNetRecyclerView.getItemEntityList().clearItemDatas();
         allItems.clear();
-        mView.updateData();
+        mNetRecyclerView.updateData();
     }
 
     public Y_PagePresenterConfig getPageConfig() {

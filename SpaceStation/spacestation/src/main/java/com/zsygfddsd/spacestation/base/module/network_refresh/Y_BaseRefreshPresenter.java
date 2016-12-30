@@ -3,7 +3,8 @@ package com.zsygfddsd.spacestation.base.module.network_refresh;
 
 import android.content.Context;
 
-import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetPresenter;
+import com.zsygfddsd.spacestation.base.module.base.Y_I_View;
+import com.zsygfddsd.spacestation.base.module.network.Y_I_NetView;
 import com.zsygfddsd.spacestation.common.helpers.http.ObservableFactory;
 import com.zsygfddsd.spacestation.common.helpers.http.Subscriber.NetAndErrorCheckerSubscriber;
 import com.zsygfddsd.spacestation.data.bean.ComRespInfo;
@@ -16,27 +17,25 @@ import rx.Observable;
  * DATA:表示ComRespInfo<DATA> 中的DATA的bean
  * D:表示每一个item的bean
  */
-public abstract class Y_BaseRefreshPresenter<DATA> extends Y_BaseNetPresenter implements Y_BaseRefreshContract.IBaseRefreshPresenter {
+public abstract class Y_BaseRefreshPresenter<DATA> implements Y_I_NetRefreshPresenter {
 
     private Context context;
-    private Y_BaseRefreshContract.IBaseRefreshView mView;
+    private Y_I_View mView;
+    private Y_I_NetView mNetView;
+    private Y_I_NetRefreshView mNetRefreshView;
 
     private Y_RefreshPresenterConfig config;
 
-    public Y_BaseRefreshPresenter(Context context, Y_BaseRefreshContract.IBaseRefreshView mView, Y_RefreshPresenterConfig config) {
-        super(mView);
+    public Y_BaseRefreshPresenter(Context context, Y_I_View mView, Y_I_NetView mNetView, Y_I_NetRefreshView mNetRefreshView, Y_RefreshPresenterConfig config) {
         this.context = context;
         this.mView = mView;
+        this.mNetView = mNetView;
+        this.mNetRefreshView = mNetRefreshView;
         this.config = config;
     }
 
-    public Y_BaseRefreshPresenter(Context context, Y_BaseRefreshContract.IBaseRefreshView mView) {
-        this(context, mView, new Y_RefreshPresenterConfig.Builder().create());
-    }
-
-    @Override
-    public void start() {
-        super.start();
+    public Y_BaseRefreshPresenter(Context context, Y_I_View mView, Y_I_NetView mNetView, Y_I_NetRefreshView mNetRefreshView) {
+        this(context, mView, mNetView, mNetRefreshView, new Y_RefreshPresenterConfig.Builder().create());
     }
 
     public NetAndErrorCheckerSubscriber getDefaultSubscriber() {
@@ -44,20 +43,20 @@ public abstract class Y_BaseRefreshPresenter<DATA> extends Y_BaseNetPresenter im
 
             @Override
             public void onCompleted() {
-                mView.hideRefreshInfication();
+                mNetRefreshView.hideRefreshInfication();
             }
 
             @Override
             public void onError(Throwable e) {
-                mView.showLoadingError();
-                mView.hideRefreshInfication();
+                mNetView.showLoadingError();
+                mNetRefreshView.hideRefreshInfication();
             }
 
             @Override
             public void onNext(ComRespInfo<DATA> dataComRespInfo) {
                 super.onNext(dataComRespInfo);
                 if (dataComRespInfo.getResult()) {
-                    mView.onBindViewData(dataComRespInfo);
+                    mNetRefreshView.onBindViewData(dataComRespInfo);
                 } else {
                     mView.showToast("刷新失败!");
                 }

@@ -3,6 +3,7 @@ package com.zsygfddsd.spacestation.base.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,10 +11,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.zsygfddsd.spacestation.base.Y_BaseApplication;
-import com.zsygfddsd.spacestation.base.module.network.Y_BaseNetContract;
+import com.zsygfddsd.spacestation.base.module.network.Y_I_NetView;
 
 
-public class Y_BaseActivity extends F_RxAppCompatActivity implements Y_BaseNetContract.INetView {
+public class Y_BaseActivity extends F_RxAppCompatActivity implements Y_I_NetView {
 
     public Context mContext;
     public ProgressDialog pDialog;
@@ -86,5 +87,20 @@ public class Y_BaseActivity extends F_RxAppCompatActivity implements Y_BaseNetCo
     public F_RxAppCompatActivity getRxView() {
         return this;
     }
+
+
+    /**
+     * 本activity重新跳转本activity
+     */
+    public void reloadActivity() {
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
+
+
 
 }

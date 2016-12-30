@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
-import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_BaseRecyclerViewNetFragment;
+import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_NetRecyclerView;
 
 import net.zsygfddsd.qujing.R;
 import net.zsygfddsd.qujing.data.bean.Welfare;
@@ -16,7 +16,7 @@ import net.zsygfddsd.qujing.data.bean.Welfare;
 /**
  * Created by mac on 16/5/12.
  */
-public class WelfareListFragment extends Y_BaseRecyclerViewNetFragment<WelfareListContract.Presenter> implements WelfareListContract.View {
+public class WelfareListFragment extends Y_NetRecyclerView<WelfareListContract.Presenter> implements WelfareListContract.View {
 
 
     public static WelfareListFragment newInstance(@LayoutRes int itemLayoutId) {
