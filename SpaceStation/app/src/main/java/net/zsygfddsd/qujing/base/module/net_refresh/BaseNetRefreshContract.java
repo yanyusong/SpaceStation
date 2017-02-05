@@ -15,7 +15,7 @@ public class BaseNetRefreshContract {
 
     }
 
-    public interface INetRefreshPresenter extends BaseNetContract.INetPresenter, Y_I_NetRefreshPresenter {
+    public interface INetRefreshPresenter<DATA> extends BaseNetContract.INetPresenter, Y_I_NetRefreshPresenter<DATA> {
 
     }
 }

@@ -81,6 +81,7 @@ public abstract class Y_NetRecyclerPresenter<DATA, D> implements Y_I_NetRecycler
                     items = getListFromResponse(dataComRespInfo.getData());
 
                     if (isClear) {
+                        mNetRecyclerView.scrollToTop();
                         itemEntityList.clearItemDatas();
                         allItems.clear();
                         isClear = false;

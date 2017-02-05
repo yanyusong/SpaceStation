@@ -49,4 +49,6 @@ public interface Y_I_NetRecyclerView extends SwipeRefreshLayout.OnRefreshListene
      */
     void bindChildViewsData(GeneralRecyclerViewHolder holder, Object itemData, int position);
 
+    void scrollToTop();
+
 }

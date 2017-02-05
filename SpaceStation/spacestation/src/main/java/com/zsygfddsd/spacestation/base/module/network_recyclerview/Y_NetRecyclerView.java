@@ -334,6 +334,13 @@ public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
         }
     }
 
+    @Override
+    public void scrollToTop() {
+        if (recyclerView != null) {
+            recyclerView.scrollToPosition(0);
+        }
+    }
+
     //第一次进来的时候是否加载数据
     protected boolean getIsLoadDataFirstEnter() {
         return true;
