@@ -8,12 +8,12 @@ apply plugin: 'com.neenbedankt.android-apt'
 //version = "0.9"
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 19
         versionName "1.1.4"
 
@@ -42,18 +42,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
     //fragmentation
-    compile 'me.yokeyword:fragmentation:0.7.13'
-
-    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'me.yokeyword:fragmentation:0.10.1'
+    //    compile 'me.yokeyword:fragmentation:0.7.13'
+    compile 'com.android.support:appcompat-v7:25.1.1'
     //Rx
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
@@ -64,8 +68,7 @@ dependencies {
     compile 'com.trello:rxlifecycle-components:0.8.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //recyclerview
-    compile 'com.android.support:recyclerview-v7:25.0.0'
-
+    compile 'com.android.support:recyclerview-v7:25.1.1'
 }
 
 apply from: "bintrayUpload.gradle"
