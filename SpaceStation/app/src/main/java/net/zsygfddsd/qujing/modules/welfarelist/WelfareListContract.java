@@ -1,20 +1,19 @@
 package net.zsygfddsd.qujing.modules.welfarelist;
 
 
-import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_I_NetRecyclerPresenter;
-import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_I_NetRecyclerView;
+import net.zsygfddsd.qujing.base.fragment.net_recyclerview.BaseNetRecyclerContract;
 
 /**
  * Created by mac on 16/7/24.
  */
 public class WelfareListContract {
 
-    public interface View extends Y_I_NetRecyclerView<Presenter> {
+    public interface View extends BaseNetRecyclerContract.INetRecyclerView<Presenter> {
 
     }
 
 
-    public interface Presenter extends Y_I_NetRecyclerPresenter {
+    public interface Presenter<DATA, D> extends BaseNetRecyclerContract.INetRecyclerPresenter<DATA, D> {
 
 
     }

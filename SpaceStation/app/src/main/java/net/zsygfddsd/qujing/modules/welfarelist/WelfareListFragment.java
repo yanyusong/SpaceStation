@@ -1,5 +1,7 @@
 package net.zsygfddsd.qujing.modules.welfarelist;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,20 +10,23 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
-import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_NetRecyclerView;
 
 import net.zsygfddsd.qujing.R;
+import net.zsygfddsd.qujing.base.fragment.net_recyclerview.BaseNetRecyclerFragment;
 import net.zsygfddsd.qujing.data.bean.Welfare;
+import net.zsygfddsd.qujing.modules.welviewpager.TabsActivity;
 
 /**
  * Created by mac on 16/5/12.
  */
-public class WelfareListFragment extends Y_NetRecyclerView<WelfareListContract.Presenter> implements WelfareListContract.View {
+public class WelfareListFragment extends BaseNetRecyclerFragment<WelfareListContract.Presenter> implements WelfareListContract.View {
 
 
     public static WelfareListFragment newInstance(@LayoutRes int itemLayoutId) {
         WelfareListFragment welfareListFragment = new WelfareListFragment();
-        welfareListFragment.init(itemLayoutId);
+        Bundle bundle = new Bundle();
+        bundle.putInt(ITEM_LAYOUT_ID, itemLayoutId);
+        welfareListFragment.setArguments(bundle);
         return welfareListFragment;
     }
 
@@ -87,6 +92,8 @@ public class WelfareListFragment extends Y_NetRecyclerView<WelfareListContract.P
     }
 
     public void onItemClicked(final Welfare itemData, final int position) {
+
+        startActivity(new Intent(getActivity(), TabsActivity.class));
 
         //        Observable.just(position)
         //                .map(new Func1<Integer, String>() {

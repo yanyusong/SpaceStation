@@ -3,9 +3,8 @@ package net.zsygfddsd.qujing.modules.welfarelist;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
-import com.zsygfddsd.spacestation.base.activity.Y_BaseToolBarActivity;
-
 import net.zsygfddsd.qujing.R;
+import net.zsygfddsd.qujing.base.activity.BaseNetToolbarActivity;
 import net.zsygfddsd.qujing.modules.common.ContextModule;
 import net.zsygfddsd.qujing.modules.common.RepositoryModule;
 
@@ -14,7 +13,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WelfareListActivity extends Y_BaseToolBarActivity {
+public class WelfareListActivity extends BaseNetToolbarActivity {
 
     private static String Tag_WelfareListFragment = "WelfareListFragment";
 
@@ -40,8 +39,9 @@ public class WelfareListActivity extends Y_BaseToolBarActivity {
                 .welfareListPresenterModule(new WelfareListPresenterModule(_welfareListFragment))
                 .build()
                 .inject(this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, _welfareListFragment).commit();
-
+        if (findFragment(WelfareListFragment.class.getName()) == null) {
+            replaceLoadRootFragment(R.id.mainFrame, _welfareListFragment, false);
+        }
 
     }
 }

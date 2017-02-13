@@ -1,5 +1,6 @@
 package net.zsygfddsd.qujing.modules.welviewpager;
 
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,37 +9,31 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
-import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_NetRecyclerView;
 
 import net.zsygfddsd.qujing.R;
+import net.zsygfddsd.qujing.base.fragment.net_recyclerview.BaseNetRecyclerFragment;
 import net.zsygfddsd.qujing.data.bean.Welfare;
 
 
 /**
  * Created by mac on 16/5/12.
  */
-public class TabListFragment extends Y_NetRecyclerView<TabsContract.Presenter> implements TabsContract.View {
+public class TabListFragment extends BaseNetRecyclerFragment<TabsContract.Presenter> implements TabsContract.View {
 
 
     public static TabListFragment newInstance(@LayoutRes int itemLayoutId) {
         TabListFragment welfareListFragment = new TabListFragment();
-        welfareListFragment.init(itemLayoutId);
+        Bundle bundle = new Bundle();
+        bundle.putInt(ITEM_LAYOUT_ID, itemLayoutId);
+        bundle.putBoolean(LAZY_LOAD, true);//懒加载
+        bundle.putBoolean(ALWAYS_REFRESH_FOR_PER_VISIBLE, true);//每次进来都刷新
+        welfareListFragment.setArguments(bundle);
         return welfareListFragment;
     }
 
     @Override
     public void setPresenter(TabsContract.Presenter presenter) {
         mPresenter = presenter;
-    }
-
-    @Override
-    public boolean getIsLazyLoad() {
-        return true;
-    }
-
-    @Override
-    public boolean getIsAlwaysRefreshForPerVisible() {
-        return true;
     }
 
     @Override

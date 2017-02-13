@@ -1,21 +1,19 @@
 package net.zsygfddsd.qujing.modules.welviewpager;
 
 
-import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_I_NetRecyclerPresenter;
-import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_I_NetRecyclerView;
+import net.zsygfddsd.qujing.base.fragment.net_recyclerview.BaseNetRecyclerContract;
 
 /**
  * Created by mac on 16/7/24.
  */
 public class TabsContract {
 
-    public interface View extends Y_I_NetRecyclerView<Presenter> {
+    public interface View extends BaseNetRecyclerContract.INetRecyclerView<TabsContract.Presenter> {
 
     }
 
 
-    public interface Presenter extends Y_I_NetRecyclerPresenter {
-
+    public interface Presenter<DATA, D> extends BaseNetRecyclerContract.INetRecyclerPresenter<DATA, D> {
 
     }
 

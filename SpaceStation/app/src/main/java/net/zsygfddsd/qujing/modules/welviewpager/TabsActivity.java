@@ -5,9 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
-import com.zsygfddsd.spacestation.base.activity.Y_BaseActivity;
-
 import net.zsygfddsd.qujing.R;
+import net.zsygfddsd.qujing.base.activity.BaseNetToolbarActivity;
 import net.zsygfddsd.qujing.modules.common.ContextModule;
 import net.zsygfddsd.qujing.modules.common.RepositoryModule;
 
@@ -24,7 +23,7 @@ import butterknife.ButterKnife;
  * Created by mac on 2016/10/24.
  */
 
-public class TabsActivity extends Y_BaseActivity {
+public class TabsActivity extends BaseNetToolbarActivity {
 
 
     @BindView(R.id.toolbar)

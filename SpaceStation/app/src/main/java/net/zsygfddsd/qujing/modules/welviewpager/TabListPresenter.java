@@ -3,9 +3,9 @@ package net.zsygfddsd.qujing.modules.welviewpager;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.zsygfddsd.spacestation.base.module.network_recyclerview.Y_NetRecyclerPresenter;
 import com.zsygfddsd.spacestation.data.bean.ComRespInfo;
 
+import net.zsygfddsd.qujing.base.fragment.net_recyclerview.BaseNetRecyclerPresenter;
 import net.zsygfddsd.qujing.data.DataSource;
 import net.zsygfddsd.qujing.data.bean.Welfare;
 
@@ -16,7 +16,7 @@ import rx.Observable;
 /**
  * Created by mac on 16/7/24.
  */
-public class TabListPresenter extends Y_NetRecyclerPresenter<List<Welfare>, Welfare> implements TabsContract.Presenter {
+public class TabListPresenter extends BaseNetRecyclerPresenter<List<Welfare>, Welfare> implements TabsContract.Presenter<List<Welfare>, Welfare> {
 
     private Context _context;
     private TabsContract.View _view;

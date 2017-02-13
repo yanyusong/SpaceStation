@@ -1,7 +1,7 @@
 package com.zsygfddsd.spacestation.common.helpers.http.transformer;
 
 
-import com.zsygfddsd.spacestation.base.module.network.Y_I_NetView;
+import com.zsygfddsd.spacestation.base.fragment.network.Y_I_NetView;
 import com.zsygfddsd.spacestation.data.bean.ComRespInfo;
 
 import rx.Observable;
