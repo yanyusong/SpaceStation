@@ -12,7 +12,6 @@ public class GeneralRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     private final View mItemView;
     private final SparseArray<View> childViews;
-    private int childViewsCount;
 
     public GeneralRecyclerViewHolder(View itemView) {
         super(itemView);
@@ -24,14 +23,15 @@ public class GeneralRecyclerViewHolder extends RecyclerView.ViewHolder {
         View view = childViews.get(childViewId);
         if (view == null) {
             view = mItemView.findViewById(childViewId);
-                childViews.put(childViewId, view);
+            childViews.put(childViewId, view);
         }
         return (T) view;
     }
 
-    public void setText(int childViewId,String text){
+    public GeneralRecyclerViewHolder setText(int childViewId, String text) {
         TextView textView = getChildView(childViewId);
         textView.setText(text);
+        return this;
     }
 
 }

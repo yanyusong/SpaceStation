@@ -13,9 +13,9 @@ import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
  */
 public class MultiRecyclerAdapter extends RecyclerView.Adapter<GeneralRecyclerViewHolder> {
 
-    protected Context mContext;
-    protected LayoutInflater mLayoutInflater;
-    protected ItemEntityList itemList;
+    private Context mContext;
+    private LayoutInflater mLayoutInflater;
+    private ItemEntityList itemList;
 
 
     public MultiRecyclerAdapter(Context ct, ItemEntityList itemList) {
