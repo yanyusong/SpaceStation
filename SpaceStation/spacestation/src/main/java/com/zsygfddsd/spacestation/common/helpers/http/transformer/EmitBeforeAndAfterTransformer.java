@@ -1,6 +1,7 @@
 package com.zsygfddsd.spacestation.common.helpers.http.transformer;
 
 
+import com.zsygfddsd.spacestation.base.Y_I_Net;
 import com.zsygfddsd.spacestation.base.fragment.network.Y_I_NetView;
 import com.zsygfddsd.spacestation.data.bean.ComRespInfo;
 
@@ -16,7 +17,7 @@ import rx.functions.Action0;
  */
 public class EmitBeforeAndAfterTransformer<T> implements Observable.Transformer<ComRespInfo<T>, ComRespInfo<T>> {
 
-    private Y_I_NetView netView;
+    private Y_I_Net netView;
 
     private Subscriber subscriber;
 
@@ -24,14 +25,14 @@ public class EmitBeforeAndAfterTransformer<T> implements Observable.Transformer<
 
     private boolean canLoadCelable;
 
-    public EmitBeforeAndAfterTransformer(Y_I_NetView netView, Subscriber subscriber, boolean canShowLoading, boolean canLoadCelable) {
+    public EmitBeforeAndAfterTransformer(Y_I_Net netView, Subscriber subscriber, boolean canShowLoading, boolean canLoadCelable) {
         this.netView = netView;
         this.subscriber = subscriber;
         this.canShowLoading = canShowLoading;
         this.canLoadCelable = canLoadCelable;
     }
 
-    public EmitBeforeAndAfterTransformer(Y_I_NetView netView, Subscriber subscriber) {
+    public EmitBeforeAndAfterTransformer(Y_I_Net netView, Subscriber subscriber) {
         this.netView = netView;
         this.subscriber = subscriber;
         this.canShowLoading = true;
