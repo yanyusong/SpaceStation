@@ -40,9 +40,20 @@ public interface Y_I_NetRecyclerView extends SwipeRefreshLayout.OnRefreshListene
 
     void updateData();
     //
-    //        void updateData(List<D> itemdatas);
-    //
-    //        void updateData(int position);
+    /**
+     * 标志为正在加载数据了
+     */
+   void startLoadingData();
+
+    /**
+     * 是否正在加载数据了
+     * @return
+     */
+    boolean isLoadingData();
+    /**
+     * 结束正在加载数据
+     */
+    void completedLoadingData();
 
     void showRefreshIndication();
 

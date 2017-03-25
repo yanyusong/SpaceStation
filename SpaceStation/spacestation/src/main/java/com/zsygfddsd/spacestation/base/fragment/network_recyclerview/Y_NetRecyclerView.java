@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -58,6 +59,9 @@ public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
 
     private Fragment fragment;
     private Context ct;
+
+    private boolean isLoadingData = false;//是否正在加载数据了
+
 
     public Y_NetRecyclerView(Context ct, Fragment fragment) {
         this.ct = ct;
@@ -213,24 +217,43 @@ public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
                                                  @Override
                                                  public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                                                      super.onScrollStateChanged(recyclerView, newState);
+
+                                                     if (newState == RecyclerView.SCROLL_STATE_IDLE && !isLoadingData) {
+                                                         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                                                         int lastVisibleItemPosition;
+                                                         if (layoutManager instanceof GridLayoutManager) {
+                                                             lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
+                                                         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+                                                             int[] into = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
+                                                             ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(into);
+                                                             lastVisibleItemPosition = findMax(into);
+                                                         } else {
+                                                             lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+                                                         }
+                                                         if (layoutManager.getChildCount() > 0
+                                                                 && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && layoutManager.getItemCount() > layoutManager.getChildCount() && isHasNextPage()) {
+                                                             loadNextPage();
+                                                         }
+                                                     }
+
                                                  }
 
                                                  @Override
                                                  public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                                                      super.onScrolled(recyclerView, dx, dy);
-                                                     if (!(layoutManager instanceof StaggeredGridLayoutManager)) {
-                                                         lastVisibleItemPos[0] = ((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition();
-                                                     }
-
-                                                     int totalCount = layoutManager.getItemCount();
-                                                     if (lastVisibleItemPos[0] == totalCount - 1) {
-                                                         if (isHasNextPage()) {
-                                                             //加载下一页
-                                                             loadNextPage();
-                                                         } else {
-
-                                                         }
-                                                     }
+                                                     //                                                     if (!(layoutManager instanceof StaggeredGridLayoutManager)) {
+                                                     //                                                         lastVisibleItemPos[0] = ((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition();
+                                                     //                                                     }
+                                                     //
+                                                     //                                                     int totalCount = layoutManager.getItemCount();
+                                                     //                                                     if (lastVisibleItemPos[0] == totalCount - 1) {
+                                                     //                                                         if (isHasNextPage()) {
+                                                     //                                                             //加载下一页
+                                                     //                                                             loadNextPage();
+                                                     //                                                         } else {
+                                                     //
+                                                     //                                                         }
+                                                     //                                                     }
                                                  }
                                              }
             );
@@ -238,7 +261,17 @@ public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
         }
         return view;
     }
-    
+
+
+    private int findMax(int[] lastPositions) {
+        int max = lastPositions[0];
+        for (int value : lastPositions) {
+            if (value > max) {
+                max = value;
+            }
+        }
+        return max;
+    }
 
     public void setRefreshEnable(boolean enable) {
         refreshView.setEnabled(enable);
@@ -362,6 +395,30 @@ public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
     @Override
     public int getBottomViewLayoutId() {
         return R.layout.y_item_recycler_bottom_view;
+    }
+
+
+    /**
+     * 是否正在加载数据了
+     */
+    public void startLoadingData() {
+        isLoadingData = true;
+    }
+
+    /**
+     * 是否正在加载数据了
+     *
+     * @return
+     */
+    public boolean isLoadingData() {
+        return isLoadingData;
+    }
+
+    /**
+     * 是否正在加载数据了
+     */
+    public void completedLoadingData() {
+        isLoadingData = false;
     }
 
     public abstract void loadFirstPage();

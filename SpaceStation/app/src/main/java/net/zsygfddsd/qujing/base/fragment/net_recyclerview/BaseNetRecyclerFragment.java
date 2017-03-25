@@ -131,6 +131,21 @@ public abstract class BaseNetRecyclerFragment<T extends BaseNetRecyclerContract.
         return null;
     }
 
+    @Override
+    public void startLoadingData() {
+        netRecyclerView.startLoadingData();
+    }
+
+    @Override
+    public boolean isLoadingData() {
+        return netRecyclerView.isLoadingData();
+    }
+
+    @Override
+    public void completedLoadingData() {
+        netRecyclerView.completedLoadingData();
+    }
+
     class NetRecyclerView extends Y_NetRecyclerView {
 
         NetRecyclerView(Context ct, Fragment fragment) {

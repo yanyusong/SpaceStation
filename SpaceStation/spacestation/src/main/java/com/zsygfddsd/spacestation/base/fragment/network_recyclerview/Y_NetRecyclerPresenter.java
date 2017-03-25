@@ -56,12 +56,14 @@ public abstract class Y_NetRecyclerPresenter<DATA, D> implements Y_I_NetRecycler
             @Override
             public void onCompleted() {
                 mNetRecyclerView.hideRefreshInfication();
+                mNetRecyclerView.completedLoadingData();
             }
 
             @Override
             public void onError(Throwable e) {
                 mNetView.showLoadingError();
                 mNetRecyclerView.hideRefreshInfication();
+                mNetRecyclerView.completedLoadingData();
             }
 
             @Override
@@ -108,6 +110,7 @@ public abstract class Y_NetRecyclerPresenter<DATA, D> implements Y_I_NetRecycler
 
     @Override
     public void onInitData() {
+        mNetRecyclerView.startLoadingData();
         page = pageConfig.FirstPageIndex;
         isClear = true;
         if (pageConfig.isInitRefreshIndicationShow) {
@@ -118,6 +121,7 @@ public abstract class Y_NetRecyclerPresenter<DATA, D> implements Y_I_NetRecycler
 
     @Override
     public void onLoadMore() {
+        mNetRecyclerView.startLoadingData();
         page++;
         isClear = false;
         loadData(getRequestObservable(page, pageSize), pageConfig.isLoadMoreDialogShow, false);
@@ -125,6 +129,7 @@ public abstract class Y_NetRecyclerPresenter<DATA, D> implements Y_I_NetRecycler
 
     @Override
     public void onLoadRefresh() {
+        mNetRecyclerView.startLoadingData();
         page = pageConfig.FirstPageIndex;
         isClear = true;
         loadData(getRequestObservable(page, pageSize), pageConfig.isRefreshDialogShow, false);
