@@ -18,10 +18,10 @@ import com.zsygfddsd.spacestation.R;
  */
 public abstract class Y_NetToolbarActivity implements Y_I_NetToolbarActivity {
 
-    private Toolbar mToolbar;
-    private TextView mToolbarTitle;
-    private FrameLayout mContentView;
-    private AppCompatActivity appCompatActivity;
+    protected Toolbar mToolbar;
+    protected TextView mToolbarTitle;
+    protected FrameLayout mContentView;
+    protected AppCompatActivity appCompatActivity;
 
     public Y_NetToolbarActivity(AppCompatActivity appCompatActivity) {
         this.appCompatActivity = appCompatActivity;
