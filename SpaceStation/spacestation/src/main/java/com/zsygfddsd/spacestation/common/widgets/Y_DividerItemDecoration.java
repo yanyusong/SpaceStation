@@ -49,7 +49,8 @@ public abstract class Y_DividerItemDecoration extends RecyclerView.ItemDecoratio
         int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = parent.getChildAt(i);
-            boolean[] sideOffsetBooleans = getItemSidesIsHaveOffsets(i);
+            int itemPosition = ((RecyclerView.LayoutParams) child.getLayoutParams()).getViewLayoutPosition();
+            boolean[] sideOffsetBooleans = getItemSidesIsHaveOffsets(itemPosition);
             if (sideOffsetBooleans[0]) {
                 drawChildLeftVertical(child, c, parent);
             }
