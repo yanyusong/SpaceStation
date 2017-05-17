@@ -8,6 +8,8 @@ import com.zsygfddsd.spacestation.data.bean.ComRespInfo;
 import net.zsygfddsd.qujing.base.fragment.net_recyclerview.BaseNetRecyclerPresenter;
 import net.zsygfddsd.qujing.data.DataSource;
 import net.zsygfddsd.qujing.data.bean.Welfare;
+import net.zsygfddsd.qujing.data.local.SpCache;
+import net.zsygfddsd.qujing.data.local.SpCacheKey;
 
 import java.util.List;
 
@@ -49,7 +51,15 @@ public class WelfareListPresenter extends BaseNetRecyclerPresenter<List<Welfare>
 
     @Override
     public Observable<ComRespInfo<List<Welfare>>> getRequestObservable(int page, int pageSize) {
-        return _repository.getWelfareList("福利", pageSize + "", page + "");
+        if (page == 1) {
+            return _repository.getWelfareList(_context, false, "福利", pageSize + "", page + "");
+        } else if (page == 2) {
+            return _repository.getWelfareList(_context, true, "福利", pageSize + "", page + "");
+        } else if (page == 3) {
+            SpCache.put(_context, SpCacheKey.Cookie, "3");
+            return _repository.getWelfareList(_context, true, "福利", pageSize + "", page + "");
+        } else
+            return _repository.getWelfareList(_context, false, "福利", pageSize + "", page + "");
     }
 
 }

@@ -46,7 +46,7 @@ public class TabListPresenter extends BaseNetRecyclerPresenter<List<Welfare>, We
 
     @Override
     public Observable<ComRespInfo<List<Welfare>>> getRequestObservable(int page, int pageSize) {
-        return _repository.getWelfareList("福利", pageSize + "", page + "");
+        return _repository.getWelfareList(_context, false, "福利", pageSize + "", page + "");
     }
 
     public TabsContract.View getView() {

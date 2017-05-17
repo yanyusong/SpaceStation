@@ -14,12 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yanyusong.y_divideritemdecoration.Y_Divider;
+import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 import com.zsygfddsd.spacestation.R;
 import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.ItemEntityList;
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.MultiRecyclerAdapter;
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.OnBind;
-import com.zsygfddsd.spacestation.common.widgets.Y_DividerItemDecoration;
 
 
 /**
@@ -180,15 +181,15 @@ public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
         RecyclerView.ItemDecoration divider = getItemDecoration(ct);
 
         if (divider == null) {
-            itemDecoration = new Y_DividerItemDecoration(ct, 1, 0xffEBEBF1) {
+            itemDecoration = new Y_DividerItemDecoration(ct) {
                 @Override
-                public boolean[] getItemSidesIsHaveOffsets(int itemPosition) {
-                    boolean[] temp = {false, false, false, true};
+                public Y_Divider getDivider(int itemPosition) {
+                    Y_Divider y_divider = new Y_Divider(false, false, false, true, 1, 0xffEBEBF1);
                     //最后一个条目下边不要分割线
                     if (itemPosition == getItemEntityList().getItemCount() - 1) {
-                        temp[3] = false;
+                        y_divider.setBottom(false);
                     }
-                    return temp;
+                    return y_divider;
                 }
             };
         } else {

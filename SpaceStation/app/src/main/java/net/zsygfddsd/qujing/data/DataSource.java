@@ -1,5 +1,7 @@
 package net.zsygfddsd.qujing.data;
 
+import android.content.Context;
+
 import com.zsygfddsd.spacestation.data.bean.ComRespInfo;
 
 import net.zsygfddsd.qujing.data.bean.Welfare;
@@ -16,7 +18,7 @@ public class DataSource {
 
     public interface WelfareDataSource {
 
-        Observable<ComRespInfo<List<Welfare>>> getWelfareList(String type, String pageSize, String page);
+        Observable<ComRespInfo<List<Welfare>>> getWelfareList(Context context, boolean needCookie, String type, String pageSize, String page);
     }
 
 }

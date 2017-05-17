@@ -102,10 +102,12 @@ public abstract class Y_NetRecyclerPresenter<DATA, D> implements Y_I_NetRecycler
     }
 
     public void loadData(Observable<ComRespInfo<DATA>> observable, boolean canShowLoading, boolean canLoadCelable) {
-        Y_NetAndHttpErrorCheckerSubscriber subscriber = getDefaultSubscriber();
-        ObservableFactory.createNetObservable(context, observable, mView.getRxView())
-                .compose(new EmitBeforeAndAfterTransformer<DATA>(mNetView, subscriber, canShowLoading, canLoadCelable))
-                .subscribe(subscriber);
+        if (observable != null) {
+            Y_NetAndHttpErrorCheckerSubscriber subscriber = getDefaultSubscriber();
+            ObservableFactory.createNetObservable(context, observable, mView.getRxView())
+                    .compose(new EmitBeforeAndAfterTransformer<DATA>(mNetView, subscriber, canShowLoading, canLoadCelable))
+                    .subscribe(subscriber);
+        }
     }
 
     @Override
