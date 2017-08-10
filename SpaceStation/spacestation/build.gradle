@@ -14,8 +14,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 27
-        versionName "2.1.4"
+        versionCode 29
+        versionName "2.1.6"
 
 //在bintrayUpload.gradle里android.defaultConfig.versionName作为该library的versionName
 
@@ -57,18 +57,18 @@ dependencies {
     //fragmentation
     compile 'me.yokeyword:fragmentation:0.10.1'
     //    compile 'me.yokeyword:fragmentation:0.7.13'
-    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     //Rx
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    compile 'com.trello:rxlifecycle:0.8.0'
-    compile 'com.trello:rxlifecycle-android:0.8.0'
-    compile 'com.trello:rxlifecycle-components:0.8.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+    compile 'com.trello:rxlifecycle:1.0'
+    compile 'com.trello:rxlifecycle-android:1.0'
+    compile 'com.trello:rxlifecycle-components:1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     //recyclerview
-    compile 'com.android.support:recyclerview-v7:25.1.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.yanyusong.y_divideritemdecoration:y_divideritemdecoration:1.1'
 }
 

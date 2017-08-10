@@ -74,6 +74,7 @@ public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
         if (args != null) {
             this.itemLayoutId = args.getInt(ITEM_LAYOUT_ID) == -1 ? android.R.layout.simple_list_item_1 : args.getInt(ITEM_LAYOUT_ID);
             this.lazyLoad = args.getBoolean(LAZY_LOAD, false);
+            this.isLoadDataFirstEnter = args.getBoolean(IS_LOAD_DATA_FOR_FIRST_ENTER, true);
             this.alwaysRefreshForPerVisible = args.getBoolean(ALWAYS_REFRESH_FOR_PER_VISIBLE, false);
             if (alwaysRefreshForPerVisible) {
                 //若AlwaysRefreshForPerVisible=true,则必须同时使lazyLoad为true；
@@ -343,11 +344,6 @@ public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
         if (recyclerView != null) {
             recyclerView.scrollToPosition(0);
         }
-    }
-
-    //第一次进来的时候是否加载数据
-    protected boolean getIsLoadDataFirstEnter() {
-        return true;
     }
 
     /**

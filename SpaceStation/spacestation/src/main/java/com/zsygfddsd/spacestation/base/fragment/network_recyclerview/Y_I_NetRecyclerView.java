@@ -21,6 +21,7 @@ public interface Y_I_NetRecyclerView extends SwipeRefreshLayout.OnRefreshListene
     String ITEM_LAYOUT_ID = "itemLayoutId";
     String LAZY_LOAD = "lazyLoad";
     String ALWAYS_REFRESH_FOR_PER_VISIBLE = "alwaysRefreshForPerVisible";
+    String IS_LOAD_DATA_FOR_FIRST_ENTER = "isLoadDataFirstEnter";
 
     void setHasNextPage(boolean hasNext);
 
@@ -40,16 +41,19 @@ public interface Y_I_NetRecyclerView extends SwipeRefreshLayout.OnRefreshListene
 
     void updateData();
     //
+
     /**
      * 标志为正在加载数据了
      */
-   void startLoadingData();
+    void startLoadingData();
 
     /**
      * 是否正在加载数据了
+     *
      * @return
      */
     boolean isLoadingData();
+
     /**
      * 结束正在加载数据
      */
