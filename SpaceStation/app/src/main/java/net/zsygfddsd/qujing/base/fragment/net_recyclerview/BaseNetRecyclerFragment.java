@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
 import com.zsygfddsd.spacestation.base.adapter.multirecycler.ItemEntityList;
+import com.zsygfddsd.spacestation.base.adapter.multirecycler.MultiRecyclerAdapter;
 import com.zsygfddsd.spacestation.base.fragment.network_recyclerview.Y_NetRecyclerView;
 
 import net.zsygfddsd.qujing.base.fragment.net.BaseNetFragment;
@@ -146,6 +147,10 @@ public abstract class BaseNetRecyclerFragment<T extends BaseNetRecyclerContract.
         netRecyclerView.completedLoadingData();
     }
 
+    public MultiRecyclerAdapter getAdapter() {
+        return netRecyclerView.getAdapter();
+    }
+
     class NetRecyclerView extends Y_NetRecyclerView {
 
         NetRecyclerView(Context ct, Fragment fragment) {
@@ -171,6 +176,12 @@ public abstract class BaseNetRecyclerFragment<T extends BaseNetRecyclerContract.
         public void loadNextPage() {
             mPresenter.onLoadMore();
         }
+
+        public MultiRecyclerAdapter getAdapter() {
+            return adapter;
+        }
+
+
     }
 
 }

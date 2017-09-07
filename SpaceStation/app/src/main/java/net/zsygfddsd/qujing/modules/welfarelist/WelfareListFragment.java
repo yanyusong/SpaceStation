@@ -1,9 +1,9 @@
 package net.zsygfddsd.qujing.modules.welfarelist;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +14,12 @@ import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
 import net.zsygfddsd.qujing.R;
 import net.zsygfddsd.qujing.base.fragment.net_recyclerview.BaseNetRecyclerFragment;
 import net.zsygfddsd.qujing.data.bean.Welfare;
-import net.zsygfddsd.qujing.modules.welviewpager.TabsActivity;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Func1;
 
 /**
  * Created by mac on 16/5/12.
@@ -38,9 +43,26 @@ public class WelfareListFragment extends BaseNetRecyclerFragment<WelfareListCont
     @Override
     public void bindChildViewsData(GeneralRecyclerViewHolder holder, Object itemData, final int position) {
         final Welfare data = (Welfare) itemData;
-
         final ImageView welfareImg = holder.getChildView(R.id.iv_welfare);
-        TextView welfareDec = holder.getChildView(R.id.tv_welfare_dec);
+        final TextView welfareDec = holder.getChildView(R.id.tv_welfare_dec);
+
+        //        welfareDec.setText(data.getSeconds() + "");
+        //        welfareDec.setOnCountDownListener(data.getSeconds(), 1, new CountDownTextViewHelper.OnCountDownListener() {
+        //            @Override
+        //            public void onTick(int seconds) {
+        //                Log.e("timeOnTick", "--------position" + position + "------(" + data.getSeconds());
+        //                welfareDec.setText(seconds + "");
+        //            }
+        //
+        //            @Override
+        //            public void finish() {
+        //                welfareDec.setText("倒计时完了");
+        //            }
+        //        });
+
+        //        final CountDownTimerView welfareDec = holder.getChildView(R.id.tv_welfare_dec);
+        //        welfareDec.setTime(data.getSeconds());
+
         if (!TextUtils.isEmpty(data.getUrl())) {
             //            Transformation transformation = new Transformation() {
             //                @Override
@@ -81,8 +103,6 @@ public class WelfareListFragment extends BaseNetRecyclerFragment<WelfareListCont
             //            Picasso.with(ct).load(data.getUrl()).transform(transformation)/*.resize(ScreenUtils.getScreenWidth(ct), DensityUtils.dp2px(ct, 200f))*/.into(welfareImg);
             Picasso.with(ct).load(data.getUrl()).resize(800, 800).centerCrop().into(welfareImg);
         }
-        welfareDec.setText(data.getDesc());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,33 +113,62 @@ public class WelfareListFragment extends BaseNetRecyclerFragment<WelfareListCont
 
     public void onItemClicked(final Welfare itemData, final int position) {
 
-        startActivity(new Intent(getActivity(), TabsActivity.class));
+        //        startActivity(new Intent(getActivity(), TabsActivity.class));
 
-        //        Observable.just(position)
-        //                .map(new Func1<Integer, String>() {
-        //                    @Override
-        //                    public String call(Integer integer) {
-        //                        return "当前点击的位置是" + position;
-        //                    }
-        //                })
-        //                .subscribeOn(AndroidSchedulers.mainThread())
-        //                .observeOn(AndroidSchedulers.mainThread())
-        //                .subscribe(new Subscriber<String>() {
-        //                    @Override
-        //                    public void onCompleted() {
-        //
-        //                    }
-        //
-        //                    @Override
-        //                    public void onError(Throwable e) {
-        //
-        //                    }
-        //
-        //                    @Override
-        //                    public void onNext(String s) {
-        //                        showToast(s);
-        //                    }
-        //                });
+        Observable.just(position)
+                .map(new Func1<Integer, String>() {
+                    @Override
+                    public String call(Integer integer) {
+                        //                        Log.e("rxjava", "我是map里的异常");
+                        //                        throw new RuntimeException("我是map里的异常");
+                        return "当前点击的位置是" + position;
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        Log.e("rxjava", "doOnSubscribe");
+                    }
+                })
+                .doOnUnsubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        Log.e("rxjava", "doOnUnsubscribe");
+                    }
+                })
+                .doOnTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        Log.e("rxjava", "doOnTerminate");
+                    }
+                })
+                .doAfterTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        Log.e("rxjava", "doAfterTerminate");
+                    }
+                })
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.e("rxjava", "onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("rxjava", "onError");
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        Log.e("rxjava", "onNext");
+                        //                        Log.e("rxjava", "我是onNext里的异常");
+                        //                        throw new RuntimeException("我是onNext里的异常");
+                        showToast(s);
+                    }
+                });
     }
 
 

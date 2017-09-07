@@ -25,6 +25,10 @@ public class F_RxFragment extends SupportFragment implements LifecycleProvider<F
 
     private final BehaviorSubject<FragmentEvent> lifecycleSubject = BehaviorSubject.create();
 
+    protected BehaviorSubject<FragmentEvent> getLifecycleSubject() {
+        return lifecycleSubject;
+    }
+
     @Override
     @NonNull
     @CheckResult

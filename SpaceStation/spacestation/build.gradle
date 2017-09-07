@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
 //apply plugin: 'com.github.dcendents.android-maven'
 //apply plugin: 'com.jfrog.bintray'
 //def siteUrl = 'https://github.com/yanyusong/android-architectures-demos'    // project homepage
@@ -8,14 +7,14 @@ apply plugin: 'com.neenbedankt.android-apt'
 //version = "0.9"
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '25.0.2'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 29
-        versionName "2.1.6"
+        targetSdkVersion 26
+        versionCode 32
+        versionName "2.1.9"
 
 //在bintrayUpload.gradle里android.defaultConfig.versionName作为该library的versionName
 
@@ -69,7 +68,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     //recyclerview
     compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.yanyusong.y_divideritemdecoration:y_divideritemdecoration:1.1'
+    compile 'com.yanyusong.y_divideritemdecoration:y_divideritemdecoration:2.0.1'
 }
 
 apply from: "bintrayUpload.gradle"

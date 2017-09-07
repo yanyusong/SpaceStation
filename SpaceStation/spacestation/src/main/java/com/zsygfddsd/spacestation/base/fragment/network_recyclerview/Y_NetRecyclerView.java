@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yanyusong.y_divideritemdecoration.Y_Divider;
+import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 import com.zsygfddsd.spacestation.R;
 import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
@@ -185,10 +186,14 @@ public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
             itemDecoration = new Y_DividerItemDecoration(ct) {
                 @Override
                 public Y_Divider getDivider(int itemPosition) {
-                    Y_Divider y_divider = new Y_Divider(false, false, false, true, 1, 0xffEBEBF1);
+                    Y_Divider y_divider = new Y_DividerBuilder()
+                            .setBottomSideLine(true, 0xffebebf1, 1, 0, 0)
+                            .create();
+                    //                    Y_Divider y_divider = new Y_Divider(false, false, false, true, 1, 0xffEBEBF1);
                     //最后一个条目下边不要分割线
                     if (itemPosition == getItemEntityList().getItemCount() - 1) {
-                        y_divider.setBottom(false);
+                        y_divider = new Y_DividerBuilder()
+                                .create();
                     }
                     return y_divider;
                 }

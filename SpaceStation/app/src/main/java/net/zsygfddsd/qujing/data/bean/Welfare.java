@@ -5,86 +5,104 @@ package net.zsygfddsd.qujing.data.bean;
  */
 public class Welfare {
 
-        private String _id;
-        private String createdAt;
-        private String desc;
-        private String publishedAt;
-        private String source;
-        private String type;
-        private String url;
-        private boolean used;
-        private String who;
+    private String _id;
+    private String createdAt;
+    private String desc;
+    private String publishedAt;
+    private String source;
+    private String type;
+    private String url;
+    private boolean used;
+    private String who;
+    private int seconds = -1;
+    private long time;
 
-        public String get_id() {
-            return _id;
-        }
+    public long getTime() {
+        return time;
+    }
 
-        public void set_id(String _id) {
-            this._id = _id;
-        }
+    public void setTime(long time) {
+        this.time = time;
+    }
 
-        public String getCreatedAt() {
-            return createdAt;
-        }
+    public int getSeconds() {
+        return seconds;
+    }
 
-        public void setCreatedAt(String createdAt) {
-            this.createdAt = createdAt;
-        }
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
 
-        public String getDesc() {
-            return desc;
-        }
+    public String get_id() {
+        return _id;
+    }
 
-        public void setDesc(String desc) {
-            this.desc = desc;
-        }
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
-        public String getPublishedAt() {
-            return publishedAt;
-        }
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
-        public void setPublishedAt(String publishedAt) {
-            this.publishedAt = publishedAt;
-        }
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
 
-        public String getSource() {
-            return source;
-        }
+    public String getDesc() {
+        return desc;
+    }
 
-        public void setSource(String source) {
-            this.source = source;
-        }
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
-        public String getType() {
-            return type;
-        }
+    public String getPublishedAt() {
+        return publishedAt;
+    }
 
-        public void setType(String type) {
-            this.type = type;
-        }
+    public void setPublishedAt(String publishedAt) {
+        this.publishedAt = publishedAt;
+    }
 
-        public String getUrl() {
-            return url;
-        }
+    public String getSource() {
+        return source;
+    }
 
-        public void setUrl(String url) {
-            this.url = url;
-        }
+    public void setSource(String source) {
+        this.source = source;
+    }
 
-        public boolean isUsed() {
-            return used;
-        }
+    public String getType() {
+        return type;
+    }
 
-        public void setUsed(boolean used) {
-            this.used = used;
-        }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-        public String getWho() {
-            return who;
-        }
+    public String getUrl() {
+        return url;
+    }
 
-        public void setWho(String who) {
-            this.who = who;
-        }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public boolean isUsed() {
+        return used;
+    }
+
+    public void setUsed(boolean used) {
+        this.used = used;
+    }
+
+    public String getWho() {
+        return who;
+    }
+
+    public void setWho(String who) {
+        this.who = who;
+    }
 
 }
