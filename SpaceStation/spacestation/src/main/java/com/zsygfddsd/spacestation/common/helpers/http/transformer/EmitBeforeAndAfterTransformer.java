@@ -55,7 +55,7 @@ public class EmitBeforeAndAfterTransformer<T> implements Observable.Transformer<
                     });
                 }
             }
-        }).doOnTerminate(new Action0() {
+        }).doOnUnsubscribe(new Action0() {
             @Override
             public void call() {
                 if (canShowLoading) {
