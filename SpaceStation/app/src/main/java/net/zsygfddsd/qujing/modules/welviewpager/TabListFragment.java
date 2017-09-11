@@ -18,7 +18,7 @@ import net.zsygfddsd.qujing.data.bean.Welfare;
 /**
  * Created by mac on 16/5/12.
  */
-public class TabListFragment extends BaseNetRecyclerFragment<TabsContract.Presenter> implements TabsContract.View {
+public class TabListFragment extends BaseNetRecyclerFragment<TabsContract.Presenter,Welfare> implements TabsContract.View<Welfare> {
 
 
     public static TabListFragment newInstance(@LayoutRes int itemLayoutId) {
@@ -37,8 +37,7 @@ public class TabListFragment extends BaseNetRecyclerFragment<TabsContract.Presen
     }
 
     @Override
-    public void bindChildViewsData(GeneralRecyclerViewHolder holder, Object itemData, final int position) {
-        final Welfare data = (Welfare) itemData;
+    public void bindChildViewsData(GeneralRecyclerViewHolder holder, final Welfare data, final int position) {
 
         final ImageView welfareImg = holder.getChildView(R.id.iv_welfare);
         TextView welfareDec = holder.getChildView(R.id.tv_welfare_dec);

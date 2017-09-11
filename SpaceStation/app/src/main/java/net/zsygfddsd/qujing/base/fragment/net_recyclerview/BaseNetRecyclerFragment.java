@@ -21,7 +21,7 @@ import net.zsygfddsd.qujing.base.fragment.net.BaseNetFragment;
  * Created by mac on 2016/12/26.
  */
 
-public abstract class BaseNetRecyclerFragment<T extends BaseNetRecyclerContract.INetRecyclerPresenter> extends BaseNetFragment<T> implements BaseNetRecyclerContract.INetRecyclerView<T> {
+public abstract class BaseNetRecyclerFragment<T extends BaseNetRecyclerContract.INetRecyclerPresenter,D> extends BaseNetFragment<T> implements BaseNetRecyclerContract.INetRecyclerView<T,D> {
 
     private NetRecyclerView netRecyclerView;
 
@@ -151,7 +151,7 @@ public abstract class BaseNetRecyclerFragment<T extends BaseNetRecyclerContract.
         return netRecyclerView.getAdapter();
     }
 
-    class NetRecyclerView extends Y_NetRecyclerView {
+    class NetRecyclerView extends Y_NetRecyclerView<D> {
 
         NetRecyclerView(Context ct, Fragment fragment) {
             super(ct, fragment);
@@ -163,7 +163,7 @@ public abstract class BaseNetRecyclerFragment<T extends BaseNetRecyclerContract.
         }
 
         @Override
-        public void bindChildViewsData(GeneralRecyclerViewHolder holder, Object itemData, int position) {
+        public void bindChildViewsData(GeneralRecyclerViewHolder holder, D itemData, int position) {
             BaseNetRecyclerFragment.this.bindChildViewsData(holder, itemData, position);
         }
 

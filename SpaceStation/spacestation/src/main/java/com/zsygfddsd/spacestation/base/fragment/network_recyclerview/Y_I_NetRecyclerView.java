@@ -16,7 +16,7 @@ import com.zsygfddsd.spacestation.base.adapter.multirecycler.ItemEntityList;
  * onActivityCreated
  * onDestroyView
  */
-public interface Y_I_NetRecyclerView extends SwipeRefreshLayout.OnRefreshListener {
+public interface Y_I_NetRecyclerView<D> extends SwipeRefreshLayout.OnRefreshListener {
 
     String ITEM_LAYOUT_ID = "itemLayoutId";
     String LAZY_LOAD = "lazyLoad";
@@ -70,7 +70,7 @@ public interface Y_I_NetRecyclerView extends SwipeRefreshLayout.OnRefreshListene
      * @param itemData 封装好的分配给该item的数据，数据一般为Hashmap<K,V>或者Modle等类型
      * @param position 当前item的position
      */
-    void bindChildViewsData(GeneralRecyclerViewHolder holder, Object itemData, int position);
+    void bindChildViewsData(GeneralRecyclerViewHolder holder, D itemData, int position);
 
     void scrollToTop();
 

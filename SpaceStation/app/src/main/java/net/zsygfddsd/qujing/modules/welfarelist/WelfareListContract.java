@@ -8,7 +8,7 @@ import net.zsygfddsd.qujing.base.fragment.net_recyclerview.BaseNetRecyclerContra
  */
 public class WelfareListContract {
 
-    public interface View extends BaseNetRecyclerContract.INetRecyclerView<Presenter> {
+    public interface View<D> extends BaseNetRecyclerContract.INetRecyclerView<Presenter, D> {
 
     }
 

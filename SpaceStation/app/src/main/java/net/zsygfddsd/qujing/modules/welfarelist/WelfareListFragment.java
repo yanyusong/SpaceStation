@@ -1,5 +1,6 @@
 package net.zsygfddsd.qujing.modules.welfarelist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import com.zsygfddsd.spacestation.base.adapter.GeneralRecyclerViewHolder;
 import net.zsygfddsd.qujing.R;
 import net.zsygfddsd.qujing.base.fragment.net_recyclerview.BaseNetRecyclerFragment;
 import net.zsygfddsd.qujing.data.bean.Welfare;
+import net.zsygfddsd.qujing.modules.welviewpager.TabsActivity;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -24,7 +26,7 @@ import rx.functions.Func1;
 /**
  * Created by mac on 16/5/12.
  */
-public class WelfareListFragment extends BaseNetRecyclerFragment<WelfareListContract.Presenter> implements WelfareListContract.View {
+public class WelfareListFragment extends BaseNetRecyclerFragment<WelfareListContract.Presenter,Welfare> implements WelfareListContract.View<Welfare> {
 
 
     public static WelfareListFragment newInstance(@LayoutRes int itemLayoutId) {
@@ -41,8 +43,7 @@ public class WelfareListFragment extends BaseNetRecyclerFragment<WelfareListCont
     }
 
     @Override
-    public void bindChildViewsData(GeneralRecyclerViewHolder holder, Object itemData, final int position) {
-        final Welfare data = (Welfare) itemData;
+    public void bindChildViewsData(GeneralRecyclerViewHolder holder, final Welfare data, final int position) {
         final ImageView welfareImg = holder.getChildView(R.id.iv_welfare);
         final TextView welfareDec = holder.getChildView(R.id.tv_welfare_dec);
 
@@ -113,7 +114,7 @@ public class WelfareListFragment extends BaseNetRecyclerFragment<WelfareListCont
 
     public void onItemClicked(final Welfare itemData, final int position) {
 
-        //        startActivity(new Intent(getActivity(), TabsActivity.class));
+        startActivity(new Intent(getActivity(), TabsActivity.class));
 
         Observable.just(position)
                 .map(new Func1<Integer, String>() {

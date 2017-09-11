@@ -11,7 +11,7 @@ import net.zsygfddsd.qujing.base.fragment.net.BaseNetContract;
 
 public class BaseNetRecyclerContract {
 
-    public interface INetRecyclerView<T extends INetRecyclerPresenter> extends BaseNetContract.INetView<T>, Y_I_NetRecyclerView {
+    public interface INetRecyclerView<T extends INetRecyclerPresenter, D> extends BaseNetContract.INetView<T>, Y_I_NetRecyclerView<D> {
 
     }
 

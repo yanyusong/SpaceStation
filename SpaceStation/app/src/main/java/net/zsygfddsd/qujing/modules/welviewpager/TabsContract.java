@@ -8,7 +8,7 @@ import net.zsygfddsd.qujing.base.fragment.net_recyclerview.BaseNetRecyclerContra
  */
 public class TabsContract {
 
-    public interface View extends BaseNetRecyclerContract.INetRecyclerView<TabsContract.Presenter> {
+    public interface View<D> extends BaseNetRecyclerContract.INetRecyclerView<TabsContract.Presenter,D> {
 
     }
 

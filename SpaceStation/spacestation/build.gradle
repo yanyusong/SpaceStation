@@ -13,8 +13,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 32
-        versionName "2.1.9"
+        versionCode 34
+        versionName "2.2.1"
 
 //在bintrayUpload.gradle里android.defaultConfig.versionName作为该library的versionName
 

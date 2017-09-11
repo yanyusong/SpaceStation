@@ -29,7 +29,7 @@ import com.zsygfddsd.spacestation.base.adapter.multirecycler.OnBind;
  * T: 是IBaseRecyclerViewPresenter
  * D: 是item的bean
  */
-public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
+public abstract class Y_NetRecyclerView<D> implements Y_I_NetRecyclerView<D> {
 
     public static final String TAG = "YRecyFrag";
 
@@ -292,15 +292,15 @@ public abstract class Y_NetRecyclerView implements Y_I_NetRecyclerView {
     private void initData(Bundle savedInstanceState) {
         itemEntityList.clear();
         itemEntityList
-                .addOnBind(itemLayoutId, new OnBind() {
+                .addOnBind(itemLayoutId, new OnBind<D>() {
                     @Override
-                    public void onBindChildViewData(GeneralRecyclerViewHolder holder, Object itemData, int position) {
+                    public void onBindChildViewData(GeneralRecyclerViewHolder holder, D itemData, int position) {
                         bindChildViewsData(holder, itemData, position);
                     }
                 })
-                .addOnBind(bottomItemLayoutId, new OnBind() {
+                .addOnBind(bottomItemLayoutId, new OnBind<String>() {
                     @Override
-                    public void onBindChildViewData(GeneralRecyclerViewHolder holder, Object itemData, int position) {
+                    public void onBindChildViewData(GeneralRecyclerViewHolder holder, String itemData, int position) {
                         if (hasNextPage) {
                             holder.setText(R.id.item_bottom_text, "正在加载中...");
                         } else {
