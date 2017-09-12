@@ -109,7 +109,7 @@ public abstract class Y_NetRecyclerView<D> implements Y_I_NetRecyclerView<D> {
         //        if (!getUserVisibleHint() && isFirstCreateView && getPreCreateView() != null) {
         //            view = getPreCreateView();
         //        } else {
-        view = initView(inflater, container, savedInstanceState);
+        view = viewInflate(inflater, container, savedInstanceState);
         //        }
         Log.e(TAG, "***********************onCreateView=============");
         return view;
@@ -119,6 +119,9 @@ public abstract class Y_NetRecyclerView<D> implements Y_I_NetRecyclerView<D> {
         //        isFirstCreateView = false;
         this.isViewCreated = true;
         Log.e(TAG, "***********************onViewCreated=============");
+
+        viewInit(view, savedInstanceState);
+
     }
 
     public void onDestroyView() {
@@ -170,8 +173,13 @@ public abstract class Y_NetRecyclerView<D> implements Y_I_NetRecyclerView<D> {
         lazyInitData(savedInstanceState);
     }
 
-    private View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.y_frag_com_recyclerview, null);
+    /**
+     * 在 onViewCreated 里初始化view
+     *
+     * @param view
+     * @param savedInstanceState
+     */
+    protected void viewInit(View view, @Nullable Bundle savedInstanceState) {
         refreshView = (SwipeRefreshLayout) view.findViewById(R.id.com_refreshLayout);
         recyclerView = (RecyclerView) view.findViewById(R.id.com_recyclerView);
         //        refreshView.setColorSchemeResources();
@@ -266,7 +274,18 @@ public abstract class Y_NetRecyclerView<D> implements Y_I_NetRecyclerView<D> {
             );
 
         }
-        return view;
+    }
+
+    /**
+     * 在 onCreateView 中进行
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
+    public View viewInflate(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.y_frag_com_recyclerview, null);
     }
 
 

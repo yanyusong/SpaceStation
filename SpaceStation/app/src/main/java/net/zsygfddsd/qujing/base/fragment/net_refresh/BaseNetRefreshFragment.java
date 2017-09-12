@@ -41,6 +41,12 @@ public abstract class BaseNetRefreshFragment<T extends BaseNetRefreshContract.IN
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        netRefreshView.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         netRefreshView.onActivityCreated(savedInstanceState);
@@ -69,13 +75,18 @@ public abstract class BaseNetRefreshFragment<T extends BaseNetRefreshContract.IN
         }
 
         @Override
-        public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return BaseNetRefreshFragment.this.initView(inflater, container, savedInstanceState);
+        public View viewInflate(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            return BaseNetRefreshFragment.this.viewInflate(inflater, container, savedInstanceState);
         }
 
         @Override
-        public void initData(Bundle savedInstanceState) {
-            BaseNetRefreshFragment.this.initData(savedInstanceState);
+        public void viewInit(View view, @Nullable Bundle savedInstanceState) {
+            BaseNetRefreshFragment.this.viewInit(view, savedInstanceState);
+        }
+
+        @Override
+        public void dataInit(Bundle savedInstanceState) {
+            BaseNetRefreshFragment.this.dataInit(savedInstanceState);
         }
 
         @Override

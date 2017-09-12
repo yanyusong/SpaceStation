@@ -35,12 +35,16 @@ public abstract class Y_NetRefreshView<DATA> implements Y_I_NetRefreshView<DATA>
         refreshView = (SwipeRefreshLayout) view.findViewById(R.id.com_refreshLayout);
         refreshView.setOnRefreshListener(this);
         refreshContentView = (FrameLayout) view.findViewById(R.id.frame_refresh_content);
-        refreshContentView.addView(initView(inflater, container, savedInstanceState));
+        refreshContentView.addView(viewInflate(inflater, container, savedInstanceState));
         return view;
     }
 
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        viewInit(view, savedInstanceState);
+    }
+
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        initData(savedInstanceState);
+        dataInit(savedInstanceState);
     }
 
     @Override
