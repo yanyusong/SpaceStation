@@ -61,6 +61,7 @@ public abstract class Y_NetRecyclerPresenter<DATA, D> implements Y_I_NetRecycler
 
             @Override
             public void onError(Throwable e) {
+                super.onError(e);
                 mNetView.showLoadingError();
                 mNetRecyclerView.hideRefreshInfication();
                 mNetRecyclerView.completedLoadingData();

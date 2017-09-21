@@ -48,6 +48,7 @@ public abstract class Y_NetRefreshPresenter<DATA> implements Y_I_NetRefreshPrese
 
             @Override
             public void onError(Throwable e) {
+                super.onError(e);
                 mNetView.showLoadingError();
                 mNetRefreshView.hideRefreshInfication();
             }
