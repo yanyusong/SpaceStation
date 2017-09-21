@@ -27,8 +27,11 @@ public abstract class Y_NetAndHttpErrorCheckerSubscriber<T> extends Y_NetChecker
         }
     }
 
+    @Override
+    public void onError(Throwable e) {
+        ((Y_I_Net) context).hideLoading();
+    }
+
     public abstract void onCorrectResult(ComRespInfo<T> tComRespInfo);
-
-
 
 }
